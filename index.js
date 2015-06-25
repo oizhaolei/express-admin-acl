@@ -18,7 +18,7 @@ var app = module.exports = express();
 app.set('view engine', 'jade');
 
 // set views for error and 404 pages
-app.set('views', __dirname + '/views');
+app.set('views', __dirname + '/templates/views');
 
 // define a custom res.message() method
 // which stores messages in the session
@@ -81,20 +81,32 @@ app.use(function(req, res, next){
   next();
 });
 
-// load controllers
+//nav
+app.use(function(req, res, next){
+  res.locals.navLinks = [
+    { label: 'Home', key: 'home', href: '/' },
+    { label: 'Blog', key: 'blog', href: '/blog' },
+    { label: 'Gallery', key: 'gallery', href: '/gallery' },
+    { label: 'Contact', key: 'contact', href: '/contact' }
+  ];
+  next();
+});
+
+// load restful api
 require('./lib/boot')(app, { verbose: !module.parent });
+require('./routes')(app, { verbose: !module.parent });
 
 app.use(function(err, req, res, next){
   // log it
   if (!module.parent) console.error(err.stack);
 
   // error page
-  res.status(500).render('5xx');
+  res.status(500).render('errors/500');
 });
 
 // assume 404 since no middleware responded
 app.use(function(req, res, next){
-  res.status(404).render('404', { url: req.originalUrl });
+  res.status(404).render('errors/404', { url: req.originalUrl });
 });
 
 /* istanbul ignore next */

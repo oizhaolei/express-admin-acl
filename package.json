@@ -29,6 +29,7 @@
   "dependencies": {
     "acl": "^0.4.7",
     "body-parser": "^1.13.1",
+    "csv": "^0.4.5",
     "express": "^4.13.0",
     "express-session": "^1.11.3",
     "jade": "^1.11.0",
