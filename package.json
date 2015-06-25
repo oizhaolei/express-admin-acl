@@ -1,0 +1,40 @@
+{
+  "name": "express-admin-acl",
+  "version": "1.0.0",
+  "description": "An admin UI using expressjs, to manage ACL, users, roles, resources, permissions, etc...",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:oizhaolei/express-admin-acl.git"
+  },
+  "keywords": [
+    "express",
+    "admin",
+    "manager",
+    "ACL",
+    "roles",
+    "users",
+    "resources",
+    "permissions"
+  ],
+  "author": "zhaolei <oizhaolei@gmail.com> (https://github.com/oizhaolei)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oizhaolei/express-admin-acl/issues"
+  },
+  "homepage": "https://github.com/oizhaolei/express-admin-acl",
+  "dependencies": {
+    "acl": "^0.4.7",
+    "body-parser": "^1.13.1",
+    "express": "^4.13.0",
+    "express-session": "^1.11.3",
+    "jade": "^1.11.0",
+    "method-override": "^2.3.3",
+    "morgan": "^1.6.0",
+    "mysql": "^2.7.0",
+    "redis": "^0.12.1"
+  }
+}
