@@ -22,16 +22,19 @@ exports.before = function(req, res, next){
 };
 
 exports.list = function(req, res, next){
-  usersDao.list(function (err, data) {
-    if (err) {
-    } else {
-      res.send( data );
-    }
+  var statuses = req.query.statuses;
+  if(statuses){
+    statuses = JSON.parse(unescape(statuses));
+  } else {
+    statuses = [];
+  }
+  usersDao.jplist(statuses, function (json) {
+    res.json( json );
   });
 };
 
 exports.edit = function(req, res, next){
-  res.send( req.user );
+  res.json( req.user );
 };
 
 exports.del = function(req, res, next){
@@ -40,15 +43,15 @@ exports.del = function(req, res, next){
     db.users.splice(id, 1);
   }
 
-  res.send({success : true});
+  res.json({success : true});
 };
 
 exports.show = function(req, res, next){
-  res.send( req.user );
+  res.json( req.user );
 };
 
 exports.update = function(req, res, next){
   var body = req.body;
   req.user.name = body.user.name;
-  res.send( req.user );
+  res.json( req.user );
 };

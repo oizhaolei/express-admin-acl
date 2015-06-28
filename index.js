@@ -13,12 +13,12 @@ var app = module.exports = express();
 
 // settings
 
+// set views for error and 404 pages
+app.set('views', __dirname + '/templates/views');
+
 // set our default template engine to "jade"
 // which prevents the need for extensions
 app.set('view engine', 'jade');
-
-// set views for error and 404 pages
-app.set('views', __dirname + '/templates/views');
 
 // define a custom res.message() method
 // which stores messages in the session
@@ -85,16 +85,16 @@ app.use(function(req, res, next){
 app.use(function(req, res, next){
   res.locals.navLinks = [
     { label: 'Home', key: 'home', href: '/' },
-    { label: 'Blog', key: 'blog', href: '/blog' },
-    { label: 'Gallery', key: 'gallery', href: '/gallery' },
-    { label: 'Contact', key: 'contact', href: '/contact' }
+    { label: 'Users', key: 'users', href: '/users' },
+    { label: 'Roles', key: 'roles', href: '/roles' },
+    { label: 'Resources', key: 'resources', href: '/resources' },
+    { label: 'Permissions', key: 'permissions', href: '/permissions' }
   ];
   next();
 });
 
 // load restful api
 require('./lib/boot')(app, { verbose: !module.parent });
-require('./routes')(app, { verbose: !module.parent });
 
 app.use(function(err, req, res, next){
   // log it

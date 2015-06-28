@@ -1,6 +1,8 @@
 csv = require('csv');
 
-exports = module.exports = function(req, res) {
+exports.name = 'download';
+
+exports.users = function(req, res) {
 
     var users = {};
 
