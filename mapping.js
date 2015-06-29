@@ -5,7 +5,17 @@
 var express = require('express');
 var fs = require('fs');
 
-module.exports = function(parent, options){
+var isAuthenticated = function (req, res, next) {
+  // if user is authenticated in the session, call the next() to call the next request handler
+  // Passport adds this method to request object. A middleware is allowed to add properties to
+  // request and response objects
+  if (req.isAuthenticated())
+    return next();
+  // if the user is not authenticated then redirect him to the login page
+  res.redirect('/');
+};
+
+module.exports = function(parent, passport, options){
   var verbose = options.verbose;
 
   //restful api
@@ -24,7 +34,7 @@ module.exports = function(parent, options){
     // on the exported methods
     for (var key in obj) {
       // "reserved" exports
-      if (~['name', 'prefix', 'engine', 'before'].indexOf(key)) continue;
+      if (~['name', 'prefix', 'engine', 'authorization'].indexOf(key)) continue;
       // route exports
       switch (key) {
       case 'show':
@@ -64,10 +74,10 @@ module.exports = function(parent, options){
       handler = obj[key];
       path = prefix + path;
 
-      // before middleware support
-      if (obj.before) {
-        app[method](path, obj.before, handler);
-        verbose && console.log('     %s %s%s -> before -> %s', method.toUpperCase(), api_path, path, key);
+      // authorization middleware support
+      if (obj.authorization) {
+        app[method](path, isAuthenticated, handler);
+        verbose && console.log('     %s %s%s -> authorization -> %s', method.toUpperCase(), api_path, path, key);
       } else {
         app[method](path, handler);
         verbose && console.log('     %s %s%s -> %s', method.toUpperCase(), api_path, path, key);
@@ -94,7 +104,7 @@ module.exports = function(parent, options){
     // generate routes based
     // on the exported methods
     for (var key in obj) {
-      if (~['name', 'prefix', 'engine', 'before'].indexOf(key)) continue;
+      if (~['name', 'prefix', 'engine', 'authorization'].indexOf(key)) continue;
 
       // route exports
       switch (key) {
@@ -119,13 +129,54 @@ module.exports = function(parent, options){
       // setup
       handler = obj[key];
 
-      console.log('     %s %s -> %s', method.toUpperCase(), path, key);
-      app[method](path, handler);
+      // authorization middleware support
+      if (obj.authorization) {
+        app[method](path, isAuthenticated, handler);
+        verbose && console.log('     %s %s%s -> authorization -> %s', method.toUpperCase(), api_path, path, key);
+      } else {
+        app[method](path, handler);
+        verbose && console.log('     %s %s%s -> %s', method.toUpperCase(), api_path, path, key);
+      }
 
     }
 
     // mount the app
     parent.use(web_path, app);
+  });
+
+  //customize
+  parent.get('/', function(req, res) {
+    res.render('index', { user: req.user } );
+  });
+
+  /* Handle Login POST */
+  parent.get('/login',function(req, res){
+    res.render('login', { message: req.flash('message')});
+  });
+
+  parent.post('/login', passport.authenticate('login', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash : true
+  }));
+
+  /* GET Registration Page */
+  parent.get('/signup', function(req, res){
+    res.render('register', { message: req.flash('message')});
+  });
+
+  /* Handle Registration POST */
+  parent.post('/signup', passport.authenticate('signup', {
+    successRedirect: '/',
+    failureRedirect: '/signup',
+    failureFlash : true
+  }));
+
+
+  /* Handle Logout */
+  parent.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/');
   });
 
 };

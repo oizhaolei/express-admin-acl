@@ -7,18 +7,7 @@ var usersDao = new Users();
 
 exports.name = 'user';
 
-exports.before = function(req, res, next){
-  var id = req.params.user_id;
-  if (!id) return next();
-  // pretend to query a database...
-  process.nextTick(function(){
-    req.user = usersDao.getUser(id);
-    // cant find that user
-    if (!req.user) return next('route');
-    // found it, move on to the routes
-    next();
-  });
-};
+exports.authorization = true;
 
 exports.list = function(req, res, next){
   var statuses = req.query.statuses;
@@ -32,10 +21,6 @@ exports.list = function(req, res, next){
   });
 };
 
-exports.edit = function(req, res, next){
-  res.json( req.user );
-};
-
 exports.del = function(req, res, next){
   var id = req.params.user_id;
   usersDao.removeUser(id);
@@ -44,11 +29,18 @@ exports.del = function(req, res, next){
 };
 
 exports.show = function(req, res, next){
-  res.json( req.user );
+  var id = req.params.user_id;
+  var user = usersDao.getUser(id);
+  res.json( user );
 };
 
 exports.update = function(req, res, next){
+  var id = req.params.user_id;
   var body = req.body;
-  req.user.name = body.user.name;
-  res.json( req.user );
+  usersDao.updateUser(id, {
+    body : body
+  }, function (err) {
+    var user = usersDao.getUser(id);
+    res.json( user );
+  });
 };

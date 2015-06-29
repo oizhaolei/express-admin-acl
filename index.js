@@ -6,12 +6,20 @@
 var express = require('express');
 var logger = require('morgan');
 var session = require('express-session');
+var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
+
+var config = require('./config.json');
+var mongoose = require('mongoose');
+// Connect to DB
+mongoose.connect(config.mongodb.url);
 
 var app = module.exports = express();
 
 // settings
+var flash = require('connect-flash');
+app.use(flash());
 
 // set views for error and 404 pages
 app.set('views', __dirname + '/templates/views');
@@ -44,8 +52,17 @@ app.use(session({
   secret: 'some secret here'
 }));
 
+var passport = require('passport');
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+// Initialize Passport
+require('./passport/init')(passport);
+
 // parse request bodies (req.body)
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // allow overriding methods in query (?_method=put)
 app.use(methodOverride('_method'));
@@ -94,7 +111,7 @@ app.use(function(req, res, next){
 });
 
 // load restful api
-require('./mapping')(app, { verbose: !module.parent });
+require('./mapping')(app, passport, { verbose: !module.parent });
 
 app.use(function(err, req, res, next){
   // log it

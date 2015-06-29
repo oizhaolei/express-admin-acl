@@ -19,7 +19,7 @@ html
     link(href="//jplist.com/content/css/jplist-demo-pages.min.css", rel="stylesheet")
     link(href="//jplist.com/content/css/styles.min.css?v=8", rel="stylesheet")
 
-    if user && user.canAccessKeystone
+    if user
       link(href="/keystone/styles/content/editor.min.css", rel="stylesheet")
 
     block css
@@ -42,10 +42,9 @@ html
           each link in navLinks
             li(class=(section == link.key ? 'active' : null)): a(href=link.href)= link.label
           if user
-            li: a(href='/keystone') Open Keystone
-            li: a(href='/keystone/signout') Sign Out
+            li: a(href='/logout') Logout
           else
-            li: a(href='/keystone/signin') Sign In
+            li: a(href='/login') Login
 
     //- scripts
     script(src='/js/lib/jquery/jquery-1.10.2.min.js')
