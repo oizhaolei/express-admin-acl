@@ -2,7 +2,6 @@
  * Module dependencies.
  */
 
-var db = require('../db');
 var Users = require("../dao/users.js");
 var usersDao = new Users();
 
@@ -13,7 +12,7 @@ exports.before = function(req, res, next){
   if (!id) return next();
   // pretend to query a database...
   process.nextTick(function(){
-    req.user = db.users[id];
+    req.user = usersDao.getUser(id);
     // cant find that user
     if (!req.user) return next('route');
     // found it, move on to the routes
@@ -39,9 +38,7 @@ exports.edit = function(req, res, next){
 
 exports.del = function(req, res, next){
   var id = req.params.user_id;
-  if (id && id < db.users.length) {
-    db.users.splice(id, 1);
-  }
+  usersDao.removeUser(id);
 
   res.json({success : true});
 };

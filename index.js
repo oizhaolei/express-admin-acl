@@ -94,7 +94,7 @@ app.use(function(req, res, next){
 });
 
 // load restful api
-require('./lib/boot')(app, { verbose: !module.parent });
+require('./mapping')(app, { verbose: !module.parent });
 
 app.use(function(err, req, res, next){
   // log it
