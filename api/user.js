@@ -2,22 +2,24 @@
  * Module dependencies.
  */
 
-var Users = require("../dao/users.js");
-var usersDao = new Users();
+var User = require('../models/user');
 
 exports.name = 'user';
 
 exports.authorization = true;
 
 exports.list = function(req, res, next){
-  var statuses = req.query.statuses;
-  if(statuses){
-    statuses = JSON.parse(unescape(statuses));
-  } else {
-    statuses = [];
-  }
-  usersDao.jplist(statuses, function (json) {
-    res.json( json );
+  var offset = req.query.offset;
+  var limit = req.query.limit;
+console.log(offset);
+console.log(limit);
+  User.find().limit(limit).skip(offset).exec(function(err, results) {
+    User.count().exec(function(err, count) {
+      res.json( {
+        data : results,
+        count : count
+      });
+    });
   });
 };
 

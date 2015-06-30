@@ -1,27 +1,28 @@
+var rows_per_page = 7;
+
 $('document').ready(function () {
-  var $list = $('#demo .list')
-  , template = Handlebars.compile($('#jplist-template').html());
   //init jplist with php + mysql data source, json and handlebars template
-  $('#demo').jplist({
-    itemsBox: '.list'
-    , itemPath: '.list-item'
-    , panelPath: '.jplist-panel'
-    //data source
-    , dataSource: {
-      type: 'server'
-      , server: {
-	//ajax settings
-	ajax: {
-	  url: '/api/users'
-	  , dataType: 'json'
-	  , type: 'GET'
-	  , cache: false
-	}
-      }
-      //render function for json + templates like handlebars, xml + xslt etc.
-      , render: function (dataItem, statuses) {
-	$list.html(template(dataItem.content));
-      }
+
+  retrieveUsers(0);
+
+});
+
+function init_page_count(pageCount) {
+  $('#pagination').twbsPagination({
+    visiblePages: 7,
+    totalPages: pageCount,
+    onPageClick: function (event, page) {
+      retrieveUsers((page - 1) * rows_per_page);
     }
   });
-});
+}
+function retrieveUsers(offset) {
+  var template = Handlebars.compile($('#jplist-template').html());
+
+  $.ajax( {
+    url: '/api/users?offset=' + offset + '&limit=' + rows_per_page
+  }).then(function(data) {
+    $('#demo').html(template(data.data));
+    init_page_count(data.count / rows_per_page);
+  });
+}
