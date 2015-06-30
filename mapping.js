@@ -6,6 +6,8 @@ var express = require('express');
 var fs = require('fs');
 
 var isAuthenticated = function (req, res, next) {
+  console.log('authenticated check.');
+
   // if user is authenticated in the session, call the next() to call the next request handler
   // Passport adds this method to request object. A middleware is allowed to add properties to
   // request and response objects
@@ -39,7 +41,7 @@ module.exports = function(parent, passport, options){
       switch (key) {
       case 'show':
         method = 'get';
-        path = '/' + name + '/:' + name + '_id';
+        path = '/' + name + 's/:' + name + '_id';
         break;
       case 'list':
         method = 'get';
@@ -47,19 +49,19 @@ module.exports = function(parent, passport, options){
         break;
       case 'edit':
         method = 'get';
-        path = '/' + name + '/:' + name + '_id/edit';
+        path = '/' + name + 's/:' + name + '_id/edit';
         break;
       case 'update':
         method = 'put';
-        path = '/' + name + '/:' + name + '_id';
+        path = '/' + name + 's/:' + name + '_id';
         break;
       case 'del':
         method = 'delete';
-        path = '/' + name + '/:' + name + '_id';
+        path = '/' + name + 's/:' + name + '_id';
         break;
       case 'create':
         method = 'post';
-        path = '/' + name;
+        path = '/' + name + 's';
         break;
       case 'index':
         method = 'get';
@@ -89,7 +91,6 @@ module.exports = function(parent, passport, options){
   });
 
   //web mapping
-  var web_path = '/';
   fs.readdirSync(__dirname + '/routes').forEach(function(name){
     verbose && console.log('\n   %s:', name);
     var obj = require('./routes/' + name);
@@ -110,7 +111,7 @@ module.exports = function(parent, passport, options){
       switch (key) {
       case 'show':
         method = 'get';
-        path = '/' + name + '/:' + name + '_id';
+        path = '/' + name + 's/:' + name + '_id';
         break;
       case 'list':
         method = 'get';
@@ -122,7 +123,7 @@ module.exports = function(parent, passport, options){
         break;
       default:
         method = 'get';
-        path = '/' + name + '/' + key;
+        path = '/' + name + 's/' + key;
       }
 
 
@@ -132,16 +133,16 @@ module.exports = function(parent, passport, options){
       // authorization middleware support
       if (obj.authorization) {
         app[method](path, isAuthenticated, handler);
-        verbose && console.log('     %s %s%s -> authorization -> %s', method.toUpperCase(), api_path, path, key);
+        verbose && console.log('     %s %s -> authorization -> %s', method.toUpperCase(), path, key);
       } else {
         app[method](path, handler);
-        verbose && console.log('     %s %s%s -> %s', method.toUpperCase(), api_path, path, key);
+        verbose && console.log('     %s %s -> %s', method.toUpperCase(), path, key);
       }
 
     }
 
     // mount the app
-    parent.use(web_path, app);
+    parent.use(app);
   });
 
   //customize

@@ -7,7 +7,7 @@ mongoose.connect(config.mongodb.url);
 var counter = 0;
 var User = require('../models/user');
 
-var findOrCreateUser = function(username, password, email, firstname, lastname, portrait){
+var findOrCreateUser = function(old_id, username, password, email, firstname, lastname, portrait){
   // find a user in Mongo with provided username
   User.findOne({ 'username' :  username }, function(err, user) {
     // In case of any error, return using the done method
@@ -24,6 +24,7 @@ var findOrCreateUser = function(username, password, email, firstname, lastname, 
       var newUser = new User();
 
       // set the user's local credentials
+      newUser.old_id = old_id;
       newUser.username = username;
       newUser.password = password;
       newUser.email = email;
@@ -45,7 +46,7 @@ var findOrCreateUser = function(username, password, email, firstname, lastname, 
 
 var mysql = require('mysql');
 var pool = mysql.createPool(config.mysql.ttt);
-var sql = 'select * from tbl_user limit 20000 offset 40000 ';
+var sql = 'select * from tbl_user limit 20000 offset 60000 ';
 pool.query(sql, function(err, data) {
   if (err) {
     console.dir(err);
@@ -53,7 +54,7 @@ pool.query(sql, function(err, data) {
     for(var i in data) {
       var row = data[i];
 
-      findOrCreateUser(row.tel, row.password, '', '', row.fullname, row.pic_url);
+      findOrCreateUser(row.id, row.tel, row.password, '', '', row.fullname, row.pic_url);
     }
   }
   pool.end();

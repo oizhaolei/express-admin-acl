@@ -2,20 +2,31 @@ extends ../layouts/default
 
 block content
   script#jplist-template(type="text/x-handlebars-template")
+    thead
+      tr
+        td Portrait
+        td Id
+        td Username
+        td Fullname
+        td Action
     {{#each this}}
-    div(class="list-item box")
-      div(class="img left")
+    tr
+      td
         a(href="//file.tttalk.org/original/{{portrait}}" target="_blank")
           img(src="//file.tttalk.org/thumbnail/{{portrait}}" width="32" height="32")
-      div(class="block right")
+      td
         p(class="id")
-          a(href="/user/{{id}}" target="_blank") {{id}}
+          a(href="/users/{{_id}}" target="_blank") {{old_id}}
+      td
         p(class="title") {{username}}
-        p(class="fullname") {{fullname}}
+      td
+        p(class="fullname") {{firstName}} {{lastName}}
+      td
+        a(href="/users/{{_id}}") Detail
     {{/each}}
 
   // Wrapper
-  div#demo(class="box jplist jplist-list-view")
+  table#demo(class="table table-striped")
   ul#pagination(class="pagination-sm")
 
   //- scripts

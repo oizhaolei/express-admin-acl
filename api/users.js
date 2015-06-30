@@ -2,6 +2,7 @@
  * Module dependencies.
  */
 
+var mongoose = require('mongoose');
 var User = require('../models/user');
 
 exports.name = 'user';
@@ -11,8 +12,6 @@ exports.authorization = true;
 exports.list = function(req, res, next){
   var offset = req.query.offset;
   var limit = req.query.limit;
-console.log(offset);
-console.log(limit);
   User.find().limit(limit).skip(offset).exec(function(err, results) {
     User.count().exec(function(err, count) {
       res.json( {
@@ -25,15 +24,16 @@ console.log(limit);
 
 exports.del = function(req, res, next){
   var id = req.params.user_id;
-  usersDao.removeUser(id);
-
-  res.json({success : true});
+  User.remove({id : id}, function(err) {
+    res.json({success : true});
+  });
 };
 
 exports.show = function(req, res, next){
   var id = req.params.user_id;
-  var user = usersDao.getUser(id);
-  res.json( user );
+  User.findOne(mongoose.Types.ObjectId(id), function(err, user) {
+    res.json( user );
+  });
 };
 
 exports.update = function(req, res, next){

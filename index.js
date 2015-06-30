@@ -92,12 +92,6 @@ app.use(function(req, res, next){
   req.session.messages = [];
 });
 
-//acl check
-app.use(function(req, res, next){
-  console.log('acl check.');
-  next();
-});
-
 //nav
 app.use(function(req, res, next){
   res.locals.navLinks = [

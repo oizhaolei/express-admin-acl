@@ -5,7 +5,7 @@ var Users = require("../../dao/users.js");
 var usersDao = new Users();
 
 exports.name = 'pet';
-exports.prefix = '/user/:user_id';
+exports.prefix = '/users/:user_id';
 
 
 exports.create = function(req, res, next){

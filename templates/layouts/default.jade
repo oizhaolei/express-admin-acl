@@ -12,7 +12,7 @@ html
 
     title= title || 'ACL Manager'
     link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon")
-    link(href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600,700', rel='stylesheet')
+    link(href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css', rel='stylesheet')
     link(href="/styles/site.min.css", rel="stylesheet")
     link(href="/style.css", rel="stylesheet")
 
@@ -39,7 +39,7 @@ html
           each link in navLinks
             li(class=(section == link.key ? 'active' : null)): a(href=link.href)= link.label
           if user
-            li: a(href='/logout') Logout
+            li: a(href='/logout')= user.username
           else
             li: a(href='/login') Login
 
@@ -47,11 +47,12 @@ html
     script(src='/js/lib/jquery/jquery-1.10.2.min.js')
     script(src='/js/lib/bootstrap/collapse.js')
     script(src='/js/lib/bootstrap/dropdown.js')
+    script(src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
     script(src='//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.4/handlebars.min.js')
     script(src='//file.tttalk.org/public/jquery/jquery.twbsPagination.min.js')
 
     //- body
-    .wrapper-inner
+    .container
       //- intro
       block intro
       //- messages
@@ -59,7 +60,7 @@ html
       //- content
       block content
     //- footer
-    .box.footer-bot-row
+    .site-footer: .container.text-center
       p Copyright &copy; 2015 TTTalk.org. All rights reserved.
       p: a(href="https://tttalk.org") @tttalk
 
