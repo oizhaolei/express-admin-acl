@@ -4,14 +4,17 @@ block content
   script#jplist-template(type="text/x-handlebars-template")
     thead
       tr
-        td Role
+        td Resource
+        td Text
         td Action
     {{#each this}}
     tr
       td
-        p(class="title") {{rolename}}
+        p(class="title") {{resource}}
       td
-        a(href="/roles/{{_id}}") Detail
+        p(class="title") {{text}}
+      td
+        a(href="/resources/{{_id}}") Detail
 
     {{/each}}
 
@@ -20,4 +23,4 @@ block content
   ul#pagination(class="pagination-sm")
 
   //- scripts
-  script(src='/js/views/roles.js')
+  script(src='/js/views/resources.js')

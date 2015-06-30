@@ -31,6 +31,7 @@ block content
   //- scripts
   script(src='/js/views/user.js')
   script(type='text/javascript').
+    //- user detail
     $('document').ready(function () {
       $.ajax( {
         url: '/api/users/#{user_id}'
@@ -38,3 +39,4 @@ block content
         populate($('#frmuser'), data);
       });
     });
+    //- roles
