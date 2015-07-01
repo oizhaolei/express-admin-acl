@@ -15,7 +15,7 @@ var isAuthenticated = function (req, res, next) {
   if (req.isAuthenticated())
     return next();
   // if the user is not authenticated then redirect him to the login page
-  res.redirect('/');
+  res.redirect('/login?url=' + req.originalUrl);
 };
 
 module.exports = function(parent, passport, options){
@@ -153,14 +153,19 @@ module.exports = function(parent, passport, options){
 
   /* Handle Login POST */
   parent.get('/login',function(req, res){
-    res.render('login', { message: req.flash('message')});
+    res.render('login', {
+      message: req.flash('message'),
+      url : req.query.url
+    });
   });
 
-  parent.post('/login', passport.authenticate('login', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    failureFlash : true
-  }));
+  parent.post('/login', passport.authenticate('login'), function(req, res) {
+    if (req.done) {
+      var redict = req.body.url ? req.body.url : '/';
+      res.redirect(redict);
+    } else
+      res.redirect('/login');
+  });
 
   /* GET Registration Page */
   parent.get('/signup', function(req, res){

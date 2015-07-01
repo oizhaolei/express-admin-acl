@@ -1,7 +1,12 @@
 /**
  * Module dependencies.
  */
+var config = require('../../config.json');
+
 var logger = require('log4js').getLogger('user-roles');
+var Role = require('../../models/role');
+var Acl = require("acl");
+var MongoClient = require('mongodb').MongoClient;
 
 exports.name = 'role';
 exports.prefix = '/users/:user_id';
@@ -9,9 +14,21 @@ exports.prefix = '/users/:user_id';
 exports.list = function(req, res, next){
   var id = req.params.user_id;
   logger.info('user-roles.list');
-  res.json({
-    selected : ["55922cb7419d122072c14cb7"],
-    roles : [{"_id":"55922cb7419d122072c14cb9","rolename":"assistant store admin","__v":0},{"_id":"55922cb7419d122072c14cb7","rolename":"super admin","__v":0},{"_id":"55922cb7419d122072c14cb8","rolename":"store admin","__v":0}]
+  MongoClient.connect(config.mongodb.url, function(err, db) {
+    var backend = new Acl.mongodbBackend(db, "acl");
+    var acl = new Acl(backend);
+    acl.userRoles(id, function(err, myRoles) {
+      db.close();
+
+      Role.find().exec(function(err, results) {
+        var roles = {
+          selected : myRoles,
+          roles : results
+        };
+        logger.info(roles);
+        res.json(roles);
+      });
+    });
   });
 };
 
