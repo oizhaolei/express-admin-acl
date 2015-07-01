@@ -14,7 +14,7 @@ function populate(data, user_id) {
   $('#lastName').editable({url: '/api/users/' + user_id, params : params, value : data.lastName});
 }
 function retrieveRoles(user_id) {
-  var template = Handlebars.compile('[{{#each this}}{"value": "{{_id}}", "text": "{{rolename}}"},{{/each}}]');
+  var template = Handlebars.compile('[{{#each this}}{"value": "{{_id}}", "text": "{{role}}"},{{/each}}]');
 
   $.ajax( {
     url: '/api/users/' + user_id + '/roles?offset=0&limit=50'

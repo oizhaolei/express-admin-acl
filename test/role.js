@@ -16,7 +16,7 @@ var data = [
 for(var i in data) {
   var role = data[i];
   var newRole = new Role();
-  newRole.rolename = role;
+  newRole.role = role;
 
   // save the role
   newRole.save(function(err) {
