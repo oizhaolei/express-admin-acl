@@ -74,7 +74,7 @@ block content
       $.ajax( {
         url: '/api/users/#{user_id}'
       }).then(function(data) {
-        populate(data);
+        populate(data, '#{user_id}');
       });
     });
     //- roles, resources, permission

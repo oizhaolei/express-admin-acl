@@ -1,11 +1,17 @@
 $.fn.editable.defaults.mode = 'inline';
+$.fn.editable.defaults.ajaxOptions = {type: "PUT"};
 
-function populate(data) {
-  $('#username').editable({url: '/api/users', value : data.username});
-  $('#password').editable({url: '/api/users', value : data.password});
-  $('#email').editable({url: '/api/users', value : data.email});
-  $('#firstName').editable({url: '/api/users', value : data.firstName});
-  $('#lastName').editable({url: '/api/users', value : data.lastName});
+function populate(data, id) {
+  var params = function(params) {  //params already contain `name`, `value` and `pk`
+    var data = {};
+    data[params.name] = params.value;
+    return data;
+  };
+  $('#username').editable({url: '/api/users/' + id, params : params, value : data.username});
+  $('#password').editable({url: '/api/users/' + id, params : params, value : data.password});
+  $('#email').editable({url: '/api/users/' + id, params : params, value : data.email});
+  $('#firstName').editable({url: '/api/users/' + id, params : params, value : data.firstName});
+  $('#lastName').editable({url: '/api/users/' + id, params : params, value : data.lastName});
 }
 function retrieveRoles(user_id) {
   var template = Handlebars.compile('[{{#each this}}{"value": "{{_id}}", "text": "{{rolename}}"},{{/each}}]');

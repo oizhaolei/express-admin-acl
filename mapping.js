@@ -1,12 +1,13 @@
 /**
  * Module dependencies.
  */
+var logger = require('log4js').getLogger('mapping');
 
 var express = require('express');
 var fs = require('fs');
 
 var isAuthenticated = function (req, res, next) {
-  console.log('authenticated check.');
+  logger.info('authenticated check.');
 
   // if user is authenticated in the session, call the next() to call the next request handler
   // Passport adds this method to request object. A middleware is allowed to add properties to
@@ -23,7 +24,7 @@ module.exports = function(parent, passport, options){
   //restful api
   var api_path = '/api';
   fs.readdirSync(__dirname + '/api').forEach(function(name){
-    verbose && console.log('\n   %s:', name);
+    verbose && logger.info('%s:', name);
     var obj = require('./api/' + name);
     name = obj.name || name;
     var prefix = obj.prefix || '';
@@ -79,10 +80,10 @@ module.exports = function(parent, passport, options){
       // authorization middleware support
       if (obj.authorization) {
         app[method](path, isAuthenticated, handler);
-        verbose && console.log('     %s %s%s -> authorization -> %s', method.toUpperCase(), api_path, path, key);
+        verbose && logger.info('     %s %s%s -> authorization -> %s', method.toUpperCase(), api_path, path, key);
       } else {
         app[method](path, handler);
-        verbose && console.log('     %s %s%s -> %s', method.toUpperCase(), api_path, path, key);
+        verbose && logger.info('     %s %s%s -> %s', method.toUpperCase(), api_path, path, key);
       }
     }
 
@@ -92,7 +93,7 @@ module.exports = function(parent, passport, options){
 
   //web mapping
   fs.readdirSync(__dirname + '/routes').forEach(function(name){
-    verbose && console.log('\n   %s:', name);
+    verbose && logger.info('%s:', name);
     var obj = require('./routes/' + name);
     name = obj.name || name;
     var app = express();
@@ -133,10 +134,10 @@ module.exports = function(parent, passport, options){
       // authorization middleware support
       if (obj.authorization) {
         app[method](path, isAuthenticated, handler);
-        verbose && console.log('     %s %s -> authorization -> %s', method.toUpperCase(), path, key);
+        verbose && logger.info('     %s %s -> authorization -> %s', method.toUpperCase(), path, key);
       } else {
         app[method](path, handler);
-        verbose && console.log('     %s %s -> %s', method.toUpperCase(), path, key);
+        verbose && logger.info('     %s %s -> %s', method.toUpperCase(), path, key);
       }
 
     }
@@ -147,7 +148,7 @@ module.exports = function(parent, passport, options){
 
   //customize
   parent.get('/', function(req, res) {
-    res.render('index', { user: req.user } );
+    res.render('index');
   });
 
   /* Handle Login POST */

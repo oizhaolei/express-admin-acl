@@ -1,6 +1,8 @@
+"use strict";
 /**
  * Module dependencies.
  */
+var logger = require('log4js').getLogger('api/users');
 
 var mongoose = require('mongoose');
 var User = require('../models/user');
@@ -23,8 +25,18 @@ exports.list = function(req, res, next){
 };
 
 exports.update = function(req, res, next){
+  var id = req.params.user_id;
   //todo
-  console.log('users.create');
+  var conditions = { _id : mongoose.Types.ObjectId(id)};
+  var update = {$set: req.body};
+
+  logger.info(conditions);
+  logger.info(update);
+  User.update(conditions, update, function(err, numAffected) {
+    logger.info(err, numAffected);
+
+    res.json({success : true});
+  });
 };
 
 exports.del = function(req, res, next){

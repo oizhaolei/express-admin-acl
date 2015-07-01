@@ -66,10 +66,11 @@ app.use(methodOverride('_method'));
 
 // expose the "messages" local variable when views are rendered
 app.use(function(req, res, next){
+  // auth user
+  res.locals.user = req.user;
+  // message
   var msgs = req.session.messages || [];
   delete req.session.messages;
-  logger.info('msg.');
-
   // expose "messages" local variable
   res.locals.messages = msgs;
 
@@ -106,7 +107,7 @@ require('./mapping')(app, passport, { verbose: !module.parent });
 
 app.use(function(err, req, res, next){
   // log it
-  if (!module.parent) console.error(err.stack);
+  if (!module.parent) logger.error(err.stack);
 
   // error page
   res.status(500).render('errors/500');
