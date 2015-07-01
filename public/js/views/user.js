@@ -1,17 +1,17 @@
 $.fn.editable.defaults.mode = 'inline';
 $.fn.editable.defaults.ajaxOptions = {type: "PUT"};
 
-function populate(data, id) {
-  var params = function(params) {  //params already contain `name`, `value` and `pk`
-    var data = {};
-    data[params.name] = params.value;
-    return data;
-  };
-  $('#username').editable({url: '/api/users/' + id, params : params, value : data.username});
-  $('#password').editable({url: '/api/users/' + id, params : params, value : data.password});
-  $('#email').editable({url: '/api/users/' + id, params : params, value : data.email});
-  $('#firstName').editable({url: '/api/users/' + id, params : params, value : data.firstName});
-  $('#lastName').editable({url: '/api/users/' + id, params : params, value : data.lastName});
+var params = function(params) {  //params already contain `name`, `value` and `pk`
+  var data = {};
+  data[params.name] = params.value;
+  return data;
+};
+function populate(data, user_id) {
+  $('#username').editable({url: '/api/users/' + user_id, params : params, value : data.username});
+  $('#password').editable({url: '/api/users/' + user_id, params : params, value : data.password});
+  $('#email').editable({url: '/api/users/' + user_id, params : params, value : data.email});
+  $('#firstName').editable({url: '/api/users/' + user_id, params : params, value : data.firstName});
+  $('#lastName').editable({url: '/api/users/' + user_id, params : params, value : data.lastName});
 }
 function retrieveRoles(user_id) {
   var template = Handlebars.compile('[{{#each this}}{"value": "{{_id}}", "text": "{{rolename}}"},{{/each}}]');
@@ -19,7 +19,12 @@ function retrieveRoles(user_id) {
   $.ajax( {
     url: '/api/users/' + user_id + '/roles?offset=0&limit=50'
   }).then(function(data) {
-    $('#roles').editable({value : data.selected, source : template(data.roles)});
+    $('#roles').editable({
+      url: '/api/users/' + user_id + '/roles',
+      ajaxOptions : {type: "POST"},
+      params : params,
+      value : data.selected,
+      source : template(data.roles)});
   });
 }
 function retrieveResources(user_id) {

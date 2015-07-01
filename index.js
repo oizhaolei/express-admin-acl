@@ -66,6 +66,7 @@ app.use(methodOverride('_method'));
 
 // expose the "messages" local variable when views are rendered
 app.use(function(req, res, next){
+  logger.debug(req.originalUrl);
   // auth user
   res.locals.user = req.user;
   // message

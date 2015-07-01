@@ -25,9 +25,9 @@ exports.list = function(req, res, next){
 };
 
 exports.update = function(req, res, next){
-  var id = req.params.user_id;
+  var user_id = req.params.user_id;
   //todo
-  var conditions = { _id : mongoose.Types.ObjectId(id)};
+  var conditions = { _id : mongoose.Types.ObjectId(user_id)};
   var update = {$set: req.body};
 
   logger.info(conditions);
@@ -40,15 +40,15 @@ exports.update = function(req, res, next){
 };
 
 exports.del = function(req, res, next){
-  var id = req.params.user_id;
-  User.remove({id : id}, function(err) {
+  var user_id = req.params.user_id;
+  User.remove({id : user_id}, function(err) {
     res.json({success : true});
   });
 };
 
 exports.show = function(req, res, next){
-  var id = req.params.user_id;
-  User.findOne(mongoose.Types.ObjectId(id), function(err, user) {
+  var user_id = req.params.user_id;
+  User.findOne(mongoose.Types.ObjectId(user_id), function(err, user) {
     res.json( user );
   });
 };

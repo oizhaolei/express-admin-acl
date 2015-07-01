@@ -12,12 +12,12 @@ exports.name = 'role';
 exports.prefix = '/users/:user_id';
 
 exports.list = function(req, res, next){
-  var id = req.params.user_id;
+  var user_id = req.params.user_id;
   logger.info('user-roles.list');
   MongoClient.connect(config.mongodb.url, function(err, db) {
     var backend = new Acl.mongodbBackend(db, "acl");
     var acl = new Acl(backend);
-    acl.userRoles(id, function(err, myRoles) {
+    acl.userRoles(user_id, function(err, myRoles) {
       db.close();
 
       Role.find().exec(function(err, results) {
@@ -33,6 +33,19 @@ exports.list = function(req, res, next){
 };
 
 exports.create = function(req, res, next){
-  //todo
-  logger.info('user-roles.create');
+  logger.info('user-roles.create', req.body.roles);
+  var user_id = req.params.user_id;
+  MongoClient.connect(config.mongodb.url, function(err, db) {
+    var backend = new Acl.mongodbBackend(db, "acl");
+    var acl = new Acl(backend);
+    acl.userRoles(user_id, function(err, myRoles) {
+      acl.removeUserRoles(user_id, myRoles, function(err) {
+        acl.addUserRoles(user_id, req.body.roles, function(err) {
+          db.close();
+          res.json({success : true});
+        });
+      });
+
+    });
+  });
 };
