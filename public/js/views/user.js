@@ -1,5 +1,36 @@
-function populate(frm, data) {
-  $.each(data, function(key, value){
-    $('[name='+key+']', frm).val(value);
+$.fn.editable.defaults.mode = 'inline';
+
+function populate(data) {
+  $('#username').editable({url: '/api/users', value : data.username});
+  $('#password').editable({url: '/api/users', value : data.password});
+  $('#email').editable({url: '/api/users', value : data.email});
+  $('#firstName').editable({url: '/api/users', value : data.firstName});
+  $('#lastName').editable({url: '/api/users', value : data.lastName});
+}
+function retrieveRoles(user_id) {
+  var template = Handlebars.compile('[{{#each this}}{"value": "{{_id}}", "text": "{{rolename}}"},{{/each}}]');
+
+  $.ajax( {
+    url: '/api/users/' + user_id + '/roles?offset=0&limit=50'
+  }).then(function(data) {
+    $('#roles').editable({value : data.selected, source : template(data.roles)});
+  });
+}
+function retrieveResources(user_id) {
+  var template = Handlebars.compile($('#resources-template').html());
+
+  $.ajax( {
+    url: '/api/resources?offset=0&limit=50'
+  }).then(function(data) {
+    $('#resources').html(template(data.data));
+  });
+}
+function retrievePermissions(user_id) {
+  var template = Handlebars.compile($('#permissions-template').html());
+
+  $.ajax( {
+    url: '/api/permissions?offset=0&limit=50'
+  }).then(function(data) {
+    $('#permissions').html(template(data.data));
   });
 }

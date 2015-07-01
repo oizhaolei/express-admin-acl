@@ -1,33 +1,71 @@
 extends ../layouts/default
 
 block content
-  form#frmuser(class='form-horizontal', action='/api/users', method='POST')
-    input(type='text', name='username', class='form-control', placeholder='Username',required, autofocus)
-    input(type='password', name='password', class='form-control nomargin', placeholder='Password', required)
-    input(type='email', name='email', class='form-control', placeholder='Email',required)
-    input(type='text', name='firstName', class='form-control', placeholder='First Name',required)
-    input(type='text', name='lastName', class='form-control', placeholder='Last Name',required)
-    button(class='btn btn-default', type='submit') Save
-    button(class='btn btn-default', type='submit') Remove
+  script#resources-template(type="text/x-handlebars-template")
+    thead
+      tr
+        td Resource
+        td Text
+        td Action
+    {{#each this}}
+    tr
+      td
+        p(class="title") {{resource}}
+      td
+        p(class="title") {{text}}
+      td
+        a(href="/resources/{{_id}}") Add
+    {{/each}}
+  script#permissions-template(type="text/x-handlebars-template")
+    thead
+      tr
+        td Permission
+        td Action
+    {{#each this}}
+    tr
+      td
+        p(class="title") {{permission}}
+      td
+        a(href="/permissions/{{_id}}") Add
+    {{/each}}
+
+  table#usertbl(class="table table-bordered table-striped")
+    tr
+      td(width="35%") Username
+      td
+        a#username(href="#" data-type="text" data-pk="#{user_id}")
+    tr
+      td Password
+      td
+        a#password(href="#" data-type="text" data-pk="#{user_id}")
+    tr
+      td Email
+      td
+        a#email(href="#" data-type="text" data-pk="#{user_id}")
+    tr
+      td FirstName
+      td
+        a#firstName(href="#" data-type="text" data-pk="#{user_id}")
+    tr
+      td LastName
+      td
+        a#lastName(href="#" data-type="text" data-pk="#{user_id}")
 
   ul(class="nav nav-tabs")
     li(class="active")
-      a(class="nav nav-tabs" data-toggle="tab" href="#roles") Roles
+      a(class="nav nav-tabs" data-toggle="tab" href="#roles-tab") Roles
     li
-      a(class="nav nav-tabs" data-toggle="tab" href="#resources") Resources
+      a(class="nav nav-tabs" data-toggle="tab" href="#resources-tab") Resources
     li
-      a(class="nav nav-tabs" data-toggle="tab" href="#permissions") Permissions
+      a(class="nav nav-tabs" data-toggle="tab" href="#permissions-tab") Permissions
 
   div(class="tab-content")
-    div#roles(class="tab-pane fade in active")
-      h3 Roles
-      p Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    div#resources(class="tab-pane fade")
-      h3 Resources
-      p Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    div#permissions(class="tab-pane fade")
-      h3 Permissions
-      p Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+    div#roles-tab(class="tab-pane fade in active")
+      a#roles(href="#" data-type="checklist" data-pk="#{user_id}")
+    div#resources-tab(class="tab-pane fade")
+      table#resources(class="table table-striped")
+    div#permissions-tab(class="tab-pane fade")
+      table#permissions(class="table table-striped")
   //- scripts
   script(src='/js/views/user.js')
   script(type='text/javascript').
@@ -36,7 +74,10 @@ block content
       $.ajax( {
         url: '/api/users/#{user_id}'
       }).then(function(data) {
-        populate($('#frmuser'), data);
+        populate(data);
       });
     });
-    //- roles
+    //- roles, resources, permission
+    retrieveRoles('#{user_id}');
+    retrieveResources('#{user_id}');
+    retrievePermissions('#{user_id}');

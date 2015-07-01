@@ -22,6 +22,11 @@ exports.list = function(req, res, next){
   });
 };
 
+exports.update = function(req, res, next){
+  //todo
+  console.log('users.create');
+};
+
 exports.del = function(req, res, next){
   var id = req.params.user_id;
   User.remove({id : id}, function(err) {

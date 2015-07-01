@@ -2,9 +2,9 @@
 /**
  * Module dependencies.
  */
+var logger = require('log4js').getLogger('app');
 
 var express = require('express');
-var logger = require('morgan');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -39,9 +39,6 @@ app.response.message = function(msg){
   return this;
 };
 
-// log
-if (!module.parent) app.use(logger('dev'));
-
 // serve static files
 app.use(express.static(__dirname + '/public'));
 
@@ -71,7 +68,7 @@ app.use(methodOverride('_method'));
 app.use(function(req, res, next){
   var msgs = req.session.messages || [];
   delete req.session.messages;
-  console.log('msg.');
+  logger.info('msg.');
 
   // expose "messages" local variable
   res.locals.messages = msgs;
@@ -123,5 +120,5 @@ app.use(function(req, res, next){
 /* istanbul ignore next */
 if (!module.parent) {
   app.listen(3000);
-  console.log('Express started on port 3000');
+  logger.info('Express started on port 3000');
 }

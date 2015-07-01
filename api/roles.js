@@ -22,6 +22,11 @@ exports.list = function(req, res, next){
   });
 };
 
+exports.update = function(req, res, next){
+  //todo
+  console.log('roles.create');
+};
+
 exports.del = function(req, res, next){
   var id = req.params.role_id;
   Role.remove({id : id}, function(err) {
