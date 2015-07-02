@@ -5,13 +5,10 @@ block content
     thead
       tr
         td Role
-        td Action
     {{#each this}}
     tr
       td
-        p(class="title") {{role}}
-      td
-        a(href="/roles/{{_id}}") Detail
+        a(href="/roles/{{_id}}") {{role}}
     {{/each}}
 
   // Wrapper

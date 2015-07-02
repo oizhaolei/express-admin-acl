@@ -29,6 +29,10 @@ block content
         a(href="/permissions/{{_id}}") Add
     {{/each}}
 
+  .row
+    .col-sm-11
+    .col-sm-1
+      button#deletebtn.btn.btn-warning( type="button" ) Delete
   table#usertbl(class="table table-bordered table-striped")
     tr
       td(width="35%") Username
@@ -67,17 +71,6 @@ block content
     div#permissions-tab(class="tab-pane fade")
       table#permissions(class="table table-striped")
   //- scripts
-  script(src='/js/views/user.js')
   script(type='text/javascript').
-    //- user detail
-    $('document').ready(function () {
-      $.ajax( {
-        url: '/api/users/#{user_id}'
-      }).then(function(data) {
-        populate(data, '#{user_id}');
-      });
-    });
-    //- roles, resources, permission
-    retrieveRoles('#{user_id}');
-    retrieveResources('#{user_id}');
-    retrievePermissions('#{user_id}');
+    var user_id = '#{user_id}';
+  script(src='/js/views/user.js')

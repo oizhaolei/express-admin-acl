@@ -46,7 +46,7 @@ var findOrCreateUser = function(old_id, username, password, email, firstname, la
 
 var mysql = require('mysql');
 var pool = mysql.createPool(config.mysql.ttt);
-var sql = 'select * from tbl_user limit 20000 offset 60000 ';
+var sql = 'select * from tbl_user limit 200 offset 70000 ';
 pool.query(sql, function(err, data) {
   if (err) {
     console.dir(err);

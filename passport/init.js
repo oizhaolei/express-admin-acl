@@ -1,4 +1,4 @@
-var logger = require('log4js').getLogger('passport/init');
+var logger = require('log4js').getLogger('passport/init.js');
 
 var login = require('./login');
 var signup = require('./signup');

@@ -8,7 +8,6 @@ block content
         td Id
         td Username
         td Fullname
-        td Action
     {{#each this}}
     tr
       td
@@ -21,13 +20,11 @@ block content
         p(class="title") {{username}}
       td
         p(class="fullname") {{firstName}} {{lastName}}
-      td
-        a(href="/users/{{_id}}") Detail
     {{/each}}
 
   // Wrapper
   ul(class="pagination-sm")
-  table#demo(class="table table-striped")
+  table#demo.table.table-striped
   ul(class="pagination-sm")
 
   //- scripts

@@ -1,7 +1,7 @@
 /**
  * Module dependencies.
  */
-var logger = require('log4js').getLogger('mapping');
+var logger = require('log4js').getLogger('mapping.js');
 
 var express = require('express');
 var fs = require('fs');
@@ -161,10 +161,12 @@ module.exports = function(parent, passport, options){
 
   parent.post('/login', passport.authenticate('login'), function(req, res) {
     if (req.done) {
-      var redict = req.body.url ? req.body.url : '/';
-      res.redirect(redict);
+      var url = req.body.url;
+      if (!url || url ==='undefined') url = '/';
+
+      res.redirect(url);
     } else
-      res.redirect('/login');
+      res.render('login');
   });
 
   /* GET Registration Page */

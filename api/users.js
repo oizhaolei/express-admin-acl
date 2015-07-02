@@ -2,7 +2,7 @@
 /**
  * Module dependencies.
  */
-var logger = require('log4js').getLogger('api/users');
+var logger = require('log4js').getLogger('api/users.js');
 
 var mongoose = require('mongoose');
 var User = require('../models/user');

@@ -1,6 +1,7 @@
 $.fn.editable.defaults.mode = 'inline';
 $.fn.editable.defaults.ajaxOptions = {type: "PUT"};
 
+
 var params = function(params) {  //params already contain `name`, `value` and `pk`
   var data = {};
   data[params.name] = params.value;
@@ -45,3 +46,17 @@ function retrievePermissions(user_id) {
     $('#permissions').html(template(data.data));
   });
 }
+
+
+//- user detail
+$('document').ready(function () {
+  $.ajax( {
+    url: '/api/users/' + user_id
+  }).then(function(data) {
+    populate(data, user_id);
+  });
+});
+//- roles, resources, permission
+retrieveRoles(user_id);
+retrieveResources(user_id);
+retrievePermissions(user_id);

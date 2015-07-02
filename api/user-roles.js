@@ -1,10 +1,10 @@
 /**
  * Module dependencies.
  */
-var config = require('../../config.json');
+var config = require('../config.json');
 
-var logger = require('log4js').getLogger('user-roles');
-var Role = require('../../models/role');
+var logger = require('log4js').getLogger('user-roles.js');
+var Role = require('../models/role');
 var Acl = require("acl");
 var MongoClient = require('mongodb').MongoClient;
 

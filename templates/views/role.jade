@@ -1,0 +1,107 @@
+extends ../layouts/default
+
+block content
+  script#role-users-template(type="text/x-handlebars-template")
+    thead
+      tr
+        td Portrait
+        td Id
+        td Username
+        td Fullname
+        td Remove
+    {{#each this}}
+    tr
+      td
+        a(href="//file.tttalk.org/original/{{portrait}}" target="_blank")
+          img(src="//file.tttalk.org/thumbnail/{{portrait}}" width="32" height="32")
+      td
+        a(href="/users/{{_id}}") {{old_id}}
+      td
+        p(class="title") {{username}}
+      td
+        p(class="fullname") {{firstName}} {{lastName}}
+      td
+        button#deleteuserbtn.btn.btn-warning.deleteuserbtn(type="button" userid="{{_id}}") Delete User
+    {{/each}}
+  script#users-template(type="text/x-handlebars-template")
+    thead
+      tr
+        td Portrait
+        td Id
+        td Username
+        td Fullname
+        td Add
+    {{#each this}}
+    tr
+      td
+        a(href="//file.tttalk.org/original/{{portrait}}" target="_blank")
+          img(src="//file.tttalk.org/thumbnail/{{portrait}}" width="32" height="32")
+      td
+        a(href="/users/{{_id}}") {{old_id}}
+      td
+        p(class="title") {{username}}
+      td
+        p(class="fullname") {{firstName}} {{lastName}}
+      td
+        button#adduserbtn.btn.btn-info.adduserbtn(type="button" userid="{{_id}}") Add User
+    {{/each}}
+  script#role-resources-template(type="text/x-handlebars-template")
+    thead
+      tr
+        td Resource
+        td Text
+        td Action
+    {{#each this}}
+    tr
+      td
+        p(class="title") {{resource}}
+      td
+        p(class="title") {{text}}
+      td
+        a(href="/resources/{{_id}}") Add
+    {{/each}}
+  script#role-permissions-template(type="text/x-handlebars-template")
+    thead
+      tr
+        td Permission
+        td Action
+    {{#each this}}
+    tr
+      td
+        p(class="title") {{permission}}
+      td
+        a(href="/permissions/{{_id}}") Add
+    {{/each}}
+
+  .row
+    .col-sm-11
+    .col-sm-1
+      button#deleteRoleBtn.btn.btn-warning(type="button") Delete Role
+  table#roletbl(class="table table-bordered table-striped")
+    tr
+      td(width="35%") Role
+      td
+        a#role(href="#" data-type="text" data-pk="#{role_id}")
+
+  ul(class="nav nav-tabs")
+    li(class="active")
+      a(class="nav nav-tabs" data-toggle="tab" href="#role-users-tab") Users
+    li
+      a(class="nav nav-tabs" data-toggle="tab" href="#role-resources-tab") Resources
+    li
+      a(class="nav nav-tabs" data-toggle="tab" href="#role-permissions-tab") Permissions
+
+  .tab-content
+    #role-users-tab(class="tab-pane fade in active")
+      table#role-users.table.table-striped
+      table#users.table.table-striped
+      ul(class="user-pagination-sm")
+
+    #role-resources-tab(class="tab-pane fade")
+      table#role-resources(class="table table-striped")
+    #role-permissions-tab(class="tab-pane fade")
+      table#role-permissions(class="table table-striped")
+
+  script(type='text/javascript').
+    var role_id = '#{role_id}';
+  script(src='/js/views/role.js')

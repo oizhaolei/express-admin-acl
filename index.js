@@ -2,7 +2,7 @@
 /**
  * Module dependencies.
  */
-var logger = require('log4js').getLogger('app');
+var logger = require('log4js').getLogger('index.js');
 
 var express = require('express');
 var session = require('express-session');
@@ -66,7 +66,7 @@ app.use(methodOverride('_method'));
 
 // expose the "messages" local variable when views are rendered
 app.use(function(req, res, next){
-  logger.debug(req.originalUrl);
+  logger.debug(req.method, req.originalUrl);
   // auth user
   res.locals.user = req.user;
   // message

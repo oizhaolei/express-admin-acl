@@ -8,6 +8,7 @@ $('document').ready(function () {
 });
 
 function init_page_count(pageCount) {
+  pageCount = parseInt(pageCount) + 1;
   $('.pagination-sm').twbsPagination({
     visiblePages: 7,
     totalPages: pageCount,

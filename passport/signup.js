@@ -1,4 +1,4 @@
-var logger = require('log4js').getLogger('passport/signup');
+var logger = require('log4js').getLogger('passport/signup.js');
 
 var LocalStrategy   = require('passport-local').Strategy;
 var User = require('../models/user');
