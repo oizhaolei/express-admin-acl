@@ -94,7 +94,6 @@ app.use(function(req, res, next){
 //nav
 app.use(function(req, res, next){
   res.locals.navLinks = [
-    { label: 'Home', key: 'home', href: '/' },
     { label: 'Users', key: 'users', href: '/users' },
     { label: 'Roles', key: 'roles', href: '/roles' },
     { label: 'Resources', key: 'resources', href: '/resources' },

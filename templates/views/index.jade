@@ -1,64 +1,107 @@
 extends ../layouts/default
 
 block css
-	style.
-		.site-header .logo {
-			opacity: 0;
-			animation: apparate 2s 1s;
-			-webkit-animation: apparate 2s 1s;
-		}
+  style.
+    .site-header .logo {
+      opacity: 0;
+      animation: apparate 2s 1s;
+      -webkit-animation: apparate 2s 1s;
+    }
 
 block content
-	.fancy-border-bottom.text-center
-		h1 Let's get started
+  .fancy-border-bottom.text-center
+    h1 Get start here
+  .row.cards
+    .col-sm-6
+      .card.card--secondary.author-link: a(href='/404')
+        span.entypo.entypo-docs.card__icon
+        .card__body
+          h3.card__title Blog
+          //- p Simple example blog with posts and categories.
+          p Posts have a slug automatically generated from their title, and support short and extended versions of the content.
+          p You can sign in using the demo account to contribute to the blog.
+          .card__button Check it out
+      .card.card--tertiary.author-link: a(href='/signin')
+        span.entypo.entypo-lock.card__icon
+        .card__body
+          h3.card__title Session Management
+          p Keystone includes session management and default sign-in and sign-out views.
+          //- p demo@keystonejs.com / demo
+          p
+            | E: demo@keystonejs.com
+            br
+            | P: demo
+          .card__button Sign in
+      .card.card--success.author-link: a(href='/404')
+        span.entypo.entypo-mail.card__icon
+        .card__body
+          h3.card__title Enquiries
+          p Simple contact form that validates input and logs enquiries to the database.
+          p You can sign in using the demo account to view the submitted enquiries.
+          .card__button Check it out
+    .col-sm-6
+      .card.card--important: a(href='/404')
+        span.entypo.entypo-lock.card__icon
+        .card__body
+          h3.card__title Error Handling
+          p The 404 and 500 views demonstrate how to set up error handlers for your application.
+          .card__button Check it out
+      .card.card--inverse: a(href='/download/users')
+        span.entypo.entypo-cloud.card__icon
+        .card__body
+          h3.card__title Download CSV
+          p For an example of how to download a list in .csv format, see /routes/download/users.js.
+          p It uses the excellent node-csv library.
+          .card__button Download users.csv
+      .card.card--primary: a(href='/gallery')
+        span.entypo.entypo-picture.card__icon
+        .card__body
+          h3.card__title Gallery
+          p Example of how to set up a page that displays multiple image galleries.
+          p Demonstrates usage of single and multi image fields and their resizing methods.
+          p You can sign in using the demo account to create and manage image galleries, and upload additional images
+          .card__button Check it out
 
-	.row.cards
-		.col-sm-6
-			.card.card--secondary: a(href='/blog')
-				span.entypo.entypo-docs.card__icon
-				.card__body
-					h3.card__title Blog
-					//- p Simple example blog with posts and categories.
-					p Posts have a slug automatically generated from their title, and support short and extended versions of the content.
-					p You can sign in using the demo account to contribute to the blog.
-					.card__button Check it out
-			.card.card--tertiary: a(href='/signin')
-				span.entypo.entypo-lock.card__icon
-				.card__body
-					h3.card__title Session Management
-					p Keystone includes session management and default sign-in and sign-out views.
-					//- p demo@keystonejs.com / demo
-					p
-						| E: demo@keystonejs.com
-						br
-						| P: demo
-					.card__button Sign in
-			.card.card--success: a(href='/contact')
-				span.entypo.entypo-mail.card__icon
-				.card__body
-					h3.card__title Enquiries
-					p Simple contact form that validates input and logs enquiries to the database.
-					p You can sign in using the demo account to view the submitted enquiries.
-					.card__button Check it out
-		.col-sm-6
-			.card.card--important: a(href='/404')
-				span.entypo.entypo-lock.card__icon
-				.card__body
-					h3.card__title Error Handling
-					p The 404 and 500 views demonstrate how to set up error handlers for your application.
-					.card__button Check it out
-			.card.card--inverse: a(href='/download/users')
-				span.entypo.entypo-cloud.card__icon
-				.card__body
-					h3.card__title Download CSV
-					p For an example of how to download a list in .csv format, see /routes/download/users.js.
-					p It uses the excellent node-csv library.
-					.card__button Download users.csv
-			.card.card--primary: a(href='/gallery')
-				span.entypo.entypo-picture.card__icon
-				.card__body
-					h3.card__title Gallery
-					p Example of how to set up a page that displays multiple image galleries.
-					p Demonstrates usage of single and multi image fields and their resizing methods.
-					p You can sign in using the demo account to create and manage image galleries, and upload additional images
-					.card__button Check it out
+  #myModal.modal.fade(role="dialog")
+    .modal-dialog
+      .modal-content
+        .modal-header(style="padding:35px 50px;")
+          button.close(type="button" data-dismiss="modal") &times;
+          h4
+            span.glyphicon.glyphicon-lock Login
+        .modal-body(style="padding:40px 50px;")
+          form.form-signin(action='/login', method='POST' role="form")
+            .form-group
+              label(for="usrname")
+                span.glyphicon.glyphicon-user
+                | Username
+              input#username.form-control(type="text" name='username' placeholder="Enter email")
+            .form-group
+              label(for="psw")
+                span.glyphicon.glyphicon-eye-open
+                | Password
+              input#password.form-control(type="password" name='password' placeholder="Enter password")
+            .checkbox
+              label
+                input(type="checkbox" value="" checked="true")
+                | Remember me
+              button.btn.btn-success.btn-block(type="submit")
+                span.glyphicon.glyphicon-off
+                | Login</button>
+        .modal-footer
+          button.btn.btn-danger.btn-default.pull-left(type="submit" data-dismiss="modal")
+            span.glyphicon.glyphicon-remove
+            | Cancel
+          p Not a member?
+            a(href="/signup") Sign Up
+          p Forgot
+            a(href="/forgetpassword") Password?
+  //- scripts
+  if !user
+    script(type='text/javascript').
+      $('document').ready(function () {
+        $(".author-link").click(function(e){
+          $("#myModal").modal();
+          return false;
+        });
+      });

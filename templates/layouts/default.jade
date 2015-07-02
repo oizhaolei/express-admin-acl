@@ -34,8 +34,9 @@ html
           span.icon-bar
       .navbar-nav-body
         ul.navbar-nav
+          li: a(href='/') Home
           each link in navLinks
-            li(class=(section == link.key ? 'active' : null)): a(href=link.href)= link.label
+            li.author-link(class=(section == link.key ? 'active' : null)): a(href=link.href)= link.label
           if user
             li: a(href='/logout')= user.username
           else
