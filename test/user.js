@@ -1,4 +1,5 @@
 "use strict";
+
 var config = require('../config.json');
 var mongoose = require('mongoose');
 // Connect to DB
