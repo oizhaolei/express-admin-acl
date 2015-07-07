@@ -36,6 +36,28 @@ var UserPhotoSchema = new mongoose.Schema ({
     width : Number,
     height : Number,
     create_date : Date
+  },
+  like_children : {
+    mysql_id : Number,
+    user_id : Number,
+    pic_url : String,
+    fullname : String,
+    create_date : Date
+  },
+  translate_children : {
+    mysql_id : Number,
+    user_id : Number,
+    pic_url : String,
+    fullname : String,
+    lang : String,
+    content : String,
+    translate_like_children : {
+      	mysql_id : Number,
+        user_id : Number,
+        pic_url : String,
+        fullname : String,
+	      create_date : Date
+    }
   }
 });
 module.exports = mongoose.model('UserPhoto', UserPhotoSchema);
