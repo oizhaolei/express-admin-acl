@@ -9,7 +9,7 @@ block content
         td Username
         td Fullname
         td Remove
-    {{#each this}}
+    | {{#each this}}
     tr
       td
         a(href="//file.tttalk.org/original/{{portrait}}" target="_blank")
@@ -22,7 +22,7 @@ block content
         p(class="fullname") {{firstName}} {{lastName}}
       td
         button#deleteuserbtn.btn.btn-warning.deleteuserbtn(type="button" userid="{{_id}}") Delete User
-    {{/each}}
+    | {{/each}}
   script#users-template(type="text/x-handlebars-template")
     thead
       tr
@@ -31,7 +31,7 @@ block content
         td Username
         td Fullname
         td Add
-    {{#each this}}
+    | {{#each this}}
     tr
       td
         a(href="//file.tttalk.org/original/{{portrait}}" target="_blank")
@@ -44,14 +44,14 @@ block content
         p(class="fullname") {{firstName}} {{lastName}}
       td
         button#adduserbtn.btn.btn-info.adduserbtn(type="button" userid="{{_id}}") Add User
-    {{/each}}
+    | {{/each}}
   script#role-resources-template(type="text/x-handlebars-template")
     thead
       tr
         td Resource
         td Text
         td Action
-    {{#each this}}
+    | {{#each this}}
     tr
       td
         p(class="title") {{resource}}
@@ -59,19 +59,19 @@ block content
         p(class="title") {{text}}
       td
         a(href="/resources/{{_id}}") Add
-    {{/each}}
+    | {{/each}}
   script#role-permissions-template(type="text/x-handlebars-template")
     thead
       tr
         td Permission
         td Action
-    {{#each this}}
+    | {{#each this}}
     tr
       td
         p(class="title") {{permission}}
       td
         a(href="/permissions/{{_id}}") Add
-    {{/each}}
+    | {{/each}}
 
   .row
     .col-sm-11

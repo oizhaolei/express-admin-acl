@@ -7,7 +7,7 @@ block content
         td Resource
         td Text
         td Action
-    {{#each this}}
+    | {{#each this}}
     tr
       td
         p(class="title") {{resource}}
@@ -15,7 +15,7 @@ block content
         p(class="title") {{text}}
       td
         a(href="/resources/{{_id}}") Detail
-    {{/each}}
+    | {{/each}}
 
   // Wrapper
   table#demo(class="table table-striped")

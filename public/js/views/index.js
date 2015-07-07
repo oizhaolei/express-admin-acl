@@ -1,10 +1,11 @@
 var rows_per_page = 7;
 var wookmark,
-    container = $("#container"),
+
     $window = $(window),
     $document = $(document),
     options = {
-      offset: 20, // Optional, the distance between grid items
+      container: $('#main'),
+      offset: 10, // Optional, the distance between grid items
       outerOffset: 10, // Optional, the distance to the containers border
       itemWidth: 210 // Optional, the width of a grid item
     },
@@ -16,12 +17,13 @@ var wookmark,
 $('document').ready(function () {
   // Init lightbox
   $('#container').magnificPopup({
-    delegate: 'li:not(.inactive) a',
+    delegate: 'li a.photo',
     type: 'image',
     gallery: {
       enabled: true
     }
   });
+  wookmark = new Wookmark("#container", options);
 
   $(document).bind('scroll', onScroll);
   loadData(minId);
@@ -60,12 +62,8 @@ function populate(data) {
 
 function applyLayout() {
   imagesLoaded($("#container"), function () {
-    if (wookmark === undefined) {
-      wookmark = new Wookmark($("#container"), options);
-    } else {
-      wookmark.initItems();
-      wookmark.layout(true);
-    }
+    wookmark.initItems();
+    wookmark.layout(true);
   });
 };
 function onScroll(event) {

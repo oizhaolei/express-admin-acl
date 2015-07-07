@@ -7,7 +7,7 @@ block content
         td Resource
         td Text
         td Action
-    {{#each this}}
+    | {{#each this}}
     tr
       td
         p(class="title") {{resource}}
@@ -15,19 +15,19 @@ block content
         p(class="title") {{text}}
       td
         a(href="/resources/{{_id}}") Add
-    {{/each}}
+    | {{/each}}
   script#permissions-template(type="text/x-handlebars-template")
     thead
       tr
         td Permission
         td Action
-    {{#each this}}
+    | {{#each this}}
     tr
       td
         p(class="title") {{permission}}
       td
         a(href="/permissions/{{_id}}") Add
-    {{/each}}
+    | {{/each}}
 
   .row
     .col-sm-11

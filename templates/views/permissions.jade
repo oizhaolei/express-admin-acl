@@ -6,13 +6,13 @@ block content
       tr
         td Permission
         td Action
-    {{#each this}}
+    | {{#each this}}
     tr
       td
         p(class="title") {{permission}}
       td
         a(href="/permissions/{{_id}}") Detail
-    {{/each}}
+    | {{/each}}
 
   // Wrapper
   table#demo(class="table table-striped")

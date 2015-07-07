@@ -8,7 +8,7 @@ block content
         td Id
         td Username
         td Fullname
-    {{#each this}}
+    | {{#each this}}
     tr
       td
         a(href="//file.tttalk.org/original/{{portrait}}" target="_blank")
@@ -20,7 +20,7 @@ block content
         p(class="title") {{username}}
       td
         p(class="fullname") {{firstName}} {{lastName}}
-    {{/each}}
+    | {{/each}}
 
   // Wrapper
   ul(class="pagination-sm")

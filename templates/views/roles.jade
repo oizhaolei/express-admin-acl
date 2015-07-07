@@ -5,11 +5,11 @@ block content
     thead
       tr
         td Role
-    {{#each this}}
+    | {{#each this}}
     tr
       td
         a(href="/roles/{{_id}}") {{role}}
-    {{/each}}
+    | {{/each}}
 
   // Wrapper
   table#demo(class="table table-striped")

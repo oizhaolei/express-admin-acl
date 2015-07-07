@@ -10,72 +10,24 @@ block css
     }
 
 block content
-  .fancy-border-bottom.text-center
-    h1 Get start here
-  .row.cards
-    .col-sm-6
-      .card.card--secondary.author-link: a(href='/404')
-        span.entypo.entypo-docs.card__icon
-        .card__body
-          h3.card__title Blog
-          //- p Simple example blog with posts and categories.
-          p Posts have a slug automatically generated from their title, and support short and extended versions of the content.
-          p You can sign in using the demo account to contribute to the blog.
-          .card__button Check it out
-      .card.card--tertiary.author-link: a(href='/signin')
-        span.entypo.entypo-lock.card__icon
-        .card__body
-          h3.card__title Session Management
-          p Keystone includes session management and default sign-in and sign-out views.
-          //- p demo@keystonejs.com / demo
-          p
-            | E: demo@keystonejs.com
-            br
-            | P: demo
-          .card__button Sign in
-      .card.card--success.author-link: a(href='/404')
-        span.entypo.entypo-mail.card__icon
-        .card__body
-          h3.card__title Enquiries
-          p Simple contact form that validates input and logs enquiries to the database.
-          p You can sign in using the demo account to view the submitted enquiries.
-          .card__button Check it out
-    .col-sm-6
-      .card.card--important: a(href='/404')
-        span.entypo.entypo-lock.card__icon
-        .card__body
-          h3.card__title Error Handling
-          p The 404 and 500 views demonstrate how to set up error handlers for your application.
-          .card__button Check it out
-      .card.card--inverse: a(href='/download/users')
-        span.entypo.entypo-cloud.card__icon
-        .card__body
-          h3.card__title Download CSV
-          p For an example of how to download a list in .csv format, see /routes/download/users.js.
-          p It uses the excellent node-csv library.
-          .card__button Download users.csv
-      .card.card--primary: a(href='/gallery')
-        span.entypo.entypo-picture.card__icon
-        .card__body
-          h3.card__title Gallery
-          p Example of how to set up a page that displays multiple image galleries.
-          p Demonstrates usage of single and multi image fields and their resizing methods.
-          p You can sign in using the demo account to create and manage image galleries, and upload additional images
-          .card__button Check it out
   script#user_photo_template(type="text/x-handlebars-template")
-    {{#each this}}
+    | {{#each this}}
     li
-      a(href="http://file.tttalk.org/original/{{pic_url}}")
+      a.photo(href="http://file.tttalk.org/original/{{pic_url}}")
         img(src="http://file.tttalk.org/bmiddle/{{pic_url}}" width="200" height="200")
-      .avatar
+      a.avatar(href="http://file.tttalk.org/original/{{user_pic}}")
         img(src="http://file.tttalk.org/thumbnail/{{user_pic}}" width="40" height="40")
+      | {{fullname}}
+      | {{user_id}}
       p {{content}}
       p {{to_content}}
-    {{/each}}
+    | {{/each}}
 
-  ul#container.tiles-wrap.animated
-  #loader
-    #loaderCircle
+  div(role="main")
+    ul#container.tiles-wrap.animated
+    #loader
+      #loaderCircle
+        img(src="images/ajax-loader-line.gif")
 
   +user-login-dialog
   //- scripts

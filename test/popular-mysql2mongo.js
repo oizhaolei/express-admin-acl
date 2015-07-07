@@ -1,5 +1,6 @@
 "use strict";
 
+var logger = require('log4js').getLogger('test/popular-mysql2mongo.js');
 
 var config = require('../config.json');
 var fs = require('fs');
@@ -22,7 +23,7 @@ var importUserPhotoRow = function(user_photo){
     }
     // already exists
     if (userPhoto) {
-      console.log('UserPhoto already exists with id: '+user_photo.id);
+      logger.info('UserPhoto already exists with id: '+user_photo.id);
     } else {
       // if there is no user with that email
       // create the user
@@ -30,9 +31,11 @@ var importUserPhotoRow = function(user_photo){
 
       newUserPhoto.mysql_id = user_photo.id;
       newUserPhoto.parent_id = user_photo.parent_id;
-      newUserPhoto.user_id = user_photo.user_id;
+      newUserPhoto.user_id = user_photo.userid;
       newUserPhoto.channel_id = user_photo.channel_id;
       newUserPhoto.pic_url = user_photo.pic_url;
+      newUserPhoto.fullname = user_photo.fullname;
+      newUserPhoto.user_pic = user_photo.user_pic;
       newUserPhoto.content = user_photo.content;
       newUserPhoto.lang = user_photo.lang;
       newUserPhoto.address = user_photo.address;
@@ -47,15 +50,24 @@ var importUserPhotoRow = function(user_photo){
       newUserPhoto.chosen = user_photo.chosen;
       newUserPhoto.create_id = user_photo.create_id;
       newUserPhoto.create_date = user_photo.create_date;
-
-      // save the user
-      newUserPhoto.save(function(err) {
-        if (err){
-          console.log('Error in Saving user photo: '+err);
-          throw err;
-        }
-        console.log('UserPhoto Registration succesful ' , (++counter), user_photo.id);
-      });
+      if (user_photo.parent_id > 0) {
+        UserPhoto.update({mysql_id : user_photo.parent_id}, { $push: { children : newUserPhoto } }, function(err) {
+          if (err){
+            logger.info('Error in Saving user photo: ' + err);
+            throw err;
+          }
+          logger.info('UserPhoto Registration succesful ' , (++counter), user_photo);
+        });
+      } else {
+        // save the user
+        newUserPhoto.save(function(err) {
+          if (err){
+            logger.info('Error in Saving user photo: '+err);
+            throw err;
+          }
+          logger.info('UserPhoto Registration succesful ' , (++counter), user_photo);
+        });
+      }
     }
   });
 };
@@ -65,11 +77,11 @@ var writeProperties = function(properties) {
   var data = JSON.stringify(properties);
   fs.writeFile(config.properties.file, data, function (err) {
     if (err) {
-      console.log('There has been an error saving your configuration data.');
-      console.log(err.message);
+      logger.info('There has been an error saving your configuration data.');
+      logger.info(err.message);
       return;
     }
-    console.log('Configuration saved successfully.');
+    logger.info('Configuration saved successfully.');
   });
 };
 
@@ -80,10 +92,10 @@ var properties;
 try {
   var data = fs.readFileSync(config.properties.file);
   properties = JSON.parse(data);
-  console.log(properties);
+  logger.info(properties);
 
 } catch (err) {
-  console.log(err);
+  logger.info(err);
   properties = {
     user_photo_id : 0
   };
@@ -91,9 +103,10 @@ try {
 
 //import user_photo
 var importUserPhoto = function(properties) {
-  var sql = 'select * from tbl_user_photo where id > ? order by id limit 10 ';
+  var sql = 'select up.*, u.fullname, u.pic_url user_pic from tbl_user_photo up left join tbl_user u on up.userid=u.id where up.id > ? order by up.id limit 10 ';
   var args = [ properties.user_photo_id];
 
+  logger.info(sql, args);
   pool.query(sql, args, function(err, data) {
     if (err) {
       console.dir(err);
