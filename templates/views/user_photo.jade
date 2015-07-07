@@ -2,13 +2,18 @@ extends ../layouts/magnific
 
 block content
   script#user-photo-template(type="text/x-handlebars-template")
-    .col-sm-6
-      a(href="//file.tttalk.org/original/{{pic_url}}" target="_blank")
-        img(src="//file.tttalk.org/original/{{pic_url}}")
-    .col-sm-6
+    .row.cards
+      .col-sm-6
+        a(href="//file.tttalk.org/original/{{pic_url}}" target="_blank")
+          img(src="//file.tttalk.org/original/{{pic_url}}")
+      .col-sm-6
         p(class="content") {{content}} {{to_content}}
+        | {{#each children}}
+        .row
+          .col-sm-12 {{content}}
+        | {{/each}}
 
-  #user-photo.lightboxContent
+  #user-photo
 
   //- scripts
   script(type='text/javascript').

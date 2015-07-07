@@ -91,17 +91,6 @@ app.use(function(req, res, next){
   req.session.messages = [];
 });
 
-//nav
-app.use(function(req, res, next){
-  res.locals.navLinks = [
-    { label: 'Users', key: 'users', href: '/users' },
-    { label: 'Roles', key: 'roles', href: '/roles' },
-    { label: 'Resources', key: 'resources', href: '/resources' },
-    { label: 'Permissions', key: 'permissions', href: '/permissions' }
-  ];
-  next();
-});
-
 // load restful api
 require('./mapping')(app, passport, { verbose: !module.parent });
 

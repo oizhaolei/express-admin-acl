@@ -103,7 +103,7 @@ try {
 
 //import user_photo
 var importUserPhoto = function(properties) {
-  var sql = 'select up.*, u.fullname, u.pic_url user_pic from tbl_user_photo up left join tbl_user u on up.userid=u.id where up.id > ? order by up.id limit 10 ';
+  var sql = 'select up.*, u.fullname, u.pic_url user_pic from tbl_user_photo up left join tbl_user u on up.userid=u.id where up.id > ? order by up.id limit 100 ';
   var args = [ properties.user_photo_id];
 
   logger.info(sql, args);

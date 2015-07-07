@@ -1,5 +1,4 @@
 body {
-    padding: 50px;
     font: 16px "Helvetica Neue", Helvetica, Arial;
 }
 a {
@@ -13,8 +12,31 @@ h1 a {
     font-size: 16px;
 }
 
-
-
+#luka {
+    background: #fbfbfb;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 44px;
+    width: 100%;
+    z-index: 104;
+    x-border-bottom: 1px solid #bbbbbb;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+    -webkit-transition: left 0.25s cubic-bezier(0.25, 0, 0.3, 1);
+    transition: left 0.25s cubic-bezier(0.25, 0, 0.3, 1);
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+body #page {
+    padding-top: 45px;
+}
+#page h1.bigPageTitle {
+  text-align: center;
+  font-size: 28px;
+  color: #999999;
+  font-weight: 300;
+  margin: 16px 0 0 0;
+}
 #wrapper {
     padding-left:312px;
     position:relative;
@@ -66,42 +88,42 @@ fieldset {
  * Progress bar for imagesLoaded
  */
 .progress-bar {
-  background-color: #0BC20B;
-  height: 3px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 0;
-  -webkit-box-shadow: 0 1px 3px rgba(11, 194, 11, 0.2);
-     -moz-box-shadow: 0 1px 3px rgba(11, 194, 11, 0.2);
-          box-shadow: 0 1px 3px rgba(11, 194, 11, 0.2);
-  -webkit-transition: width 0.1s ease-out;
-     -moz-transition: width 0.1s ease-out;
-       -o-transition: width 0.1s ease-out;
-          transition: width 0.1s ease-out;
+    background-color: #0BC20B;
+    height: 3px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 0;
+    -webkit-box-shadow: 0 1px 3px rgba(11, 194, 11, 0.2);
+    -moz-box-shadow: 0 1px 3px rgba(11, 194, 11, 0.2);
+    box-shadow: 0 1px 3px rgba(11, 194, 11, 0.2);
+    -webkit-transition: width 0.1s ease-out;
+    -moz-transition: width 0.1s ease-out;
+    -o-transition: width 0.1s ease-out;
+    transition: width 0.1s ease-out;
 }
 
 /**
  * Placerholder css
  */
 .wookmark-placeholder {
-  -webkit-border-radius: 2px;
-     -moz-border-radius: 2px;
-          border-radius: 2px;
-  background-color: #eee;
-  border: 1px solid #dedede;
-  z-index: -1;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    background-color: #eee;
+    border: 1px solid #dedede;
+    z-index: -1;
 }
 
 /**
  * Grid container
  */
 .tiles-wrap {
-  position: relative; /** Needed to ensure items are laid out relative to this container **/
-  margin: 10px 0;
-  padding: 0;
-  list-style-type: none;
+    position: relative; /** Needed to ensure items are laid out relative to this container **/
+    margin: 10px 0;
+    padding: 0;
+    list-style-type: none;
 }
 
 
@@ -109,108 +131,108 @@ fieldset {
  * Grid items
  */
 .tiles-wrap li {
-  display: block;
-  opacity: 1;
-  text-align: center;
-  list-style-type: none;
-  background-color: #fff;
-  float: left;
-  cursor: pointer;
-  width: 200px;
-  padding: 4px;
-  border: 1px solid #dedede;
-  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-     -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-  -webkit-border-radius: 2px;
-     -moz-border-radius: 2px;
-          border-radius: 2px;
+    display: block;
+    opacity: 1;
+    text-align: center;
+    list-style-type: none;
+    background-color: #fff;
+    float: left;
+    cursor: pointer;
+    width: 200px;
+    padding: 4px;
+    border: 1px solid #dedede;
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
 }
 .tiles-wrap.animated li {
-  -webkit-transition: all 0.3s ease-out;
-     -moz-transition: all 0.3s ease-out;
-       -o-transition: all 0.3s ease-out;
-          transition: all 0.3s ease-out;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
 }
 
 .tiles-wrap li.wookmark-inactive {
-  visibility: hidden;
-  opacity: 0;
+    visibility: hidden;
+    opacity: 0;
 }
 
 .tiles-wrap li:hover {
-  background-color: #fafafa;
+    background-color: #fafafa;
 }
 
 .tiles-wrap img {
-  display: block;
+    display: block;
 }
 
 .tiles-wrap a {
-  color: #555;
-  text-align: center;
-  /* display: table-cell; */
-  width: 200px;
-  height: 200px;
-  font-size: 2em;
-  font-weight: bold;
-  text-decoration: none;
+    color: #555;
+    text-align: center;
+    /* display: table-cell; */
+    width: 200px;
+    height: 200px;
+    font-size: 2em;
+    font-weight: bold;
+    text-decoration: none;
 }
 
 .tile-loading:after {
-  display: block;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background-color: #ddd;
-  content: "Loading\2026";
-  padding-top: 20px;
-  color: #999;
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: #ddd;
+    content: "Loading\2026";
+    padding-top: 20px;
+    color: #999;
 }
 
 /**
  * Filters
  */
 #filters {
-  list-style-type: none;
-  text-align: center;
-  margin: 0 5% 0 5%;
+    list-style-type: none;
+    text-align: center;
+    margin: 0 5% 0 5%;
 }
 
 #filters:after {
-  content: ".";
-  display: block;
-  clear: both;
-  visibility: hidden;
-  line-height: 0;
-  height: 0;
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
 }
 
 #filters li {
-  font-size: 12px;
-  float: left;
-  padding: 6px 8px 4px;
-  cursor: pointer;
-  margin: 0 10px;
-  -webkit-transition: all 0.15s ease-out;
-     -moz-transition: all 0.15s ease-out;
-       -o-transition: all 0.15s ease-out;
-          transition: all 0.15s ease-out;
-  -webkit-border-radius: 3px;
-     -moz-border-radius: 3px;
-          border-radius: 3px;
+    font-size: 12px;
+    float: left;
+    padding: 6px 8px 4px;
+    cursor: pointer;
+    margin: 0 10px;
+    -webkit-transition: all 0.15s ease-out;
+    -moz-transition: all 0.15s ease-out;
+    -o-transition: all 0.15s ease-out;
+    transition: all 0.15s ease-out;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
 }
 
 #filters li:hover {
-  background: #4281f5;
-  color: #ffffff;
+    background: #4281f5;
+    color: #ffffff;
 }
 
 #filters li.active {
-  background: #4281f5;
-  color: #ffffff;
+    background: #4281f5;
+    color: #ffffff;
 }
 .fixed {
     position: fixed;

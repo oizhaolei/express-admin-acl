@@ -11,7 +11,6 @@ html
     meta(name="viewport", content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width")
 
     title= title || 'ACL Manager'
-    link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon")
     link(href='//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css', rel='stylesheet')
     link(href='//cdn.bootcss.com/x-editable/1.5.1/bootstrap3-editable/css/bootstrap-editable.css', rel='stylesheet')
     link(href='//cdn.bootcss.com/normalize/3.0.3/normalize.min.css', rel='stylesheet')
@@ -21,33 +20,23 @@ html
 
     block css
     block head
-  body: .wrapper
-
-    // //- header
-    // header(role='banner').site-header
-    //   img(src='/images/keystone-arch.jpg', alt='Keystone demo').sr-only
-
-    nav.navbar
-      //- .navbar-header
-        button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-ex1-collapse')
-          span.sr-only Toggle navigation
-          span.icon-bar
-          span.icon-bar
-          span.icon-bar
-      .navbar-nav-body
+  body
+    #luka.row
+      .col-sm-11
+      .col-sm-1
         ul.navbar-nav
-          li: a(href='/') Home
-          each link in navLinks
-            li.author-link(class=(section == link.key ? 'active' : null)): a(href=link.href)= link.label
           if user
             li: a(href='/logout')= user.username
           else
             li: a(href='/login') Login
 
+
+    // //- header
+    // header(role='banner').site-header
+    //   img(src='/images/keystone-arch.jpg', alt='Keystone demo').sr-only
+
     //- scripts
     script(src='//cdn.bootcss.com/jquery/2.1.4/jquery.min.js')
-    script(src='/js/lib/bootstrap/collapse.js')
-    script(src='/js/lib/bootstrap/dropdown.js')
     script(src='//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js')
     script(src='//cdn.bootcss.com/handlebars.js/3.0.3/handlebars.min.js')
     script(src='//cdn.bootcss.com/x-editable/1.5.1/bootstrap3-editable/js/bootstrap-editable.min.js')
@@ -57,7 +46,7 @@ html
     script(src="//file.tttalk.org/public/Wookmark-jQuery/wookmark.js")
 
     //- body
-    .container
+    #page.container.wrapper
       //- intro
       block intro
       //- messages

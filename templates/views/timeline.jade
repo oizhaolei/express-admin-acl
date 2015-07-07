@@ -1,15 +1,8 @@
 extends ../layouts/default
 include ../mixins/user-login
 
-block css
-  style.
-    .site-header .logo {
-      opacity: 0;
-      animation: apparate 2s 1s;
-      -webkit-animation: apparate 2s 1s;
-    }
-
 block content
+  h1.bigPageTitle Timeline
   script#user_photo_template(type="text/x-handlebars-template")
     | {{#each this}}
     li

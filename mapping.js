@@ -148,7 +148,11 @@ module.exports = function(parent, passport, options){
 
   //customize
   parent.get('/', function(req, res) {
-    res.render('index');
+    if (req.isAuthenticated()) {
+      res.render("timeline");
+    } else {
+      res.render("hot");
+    }
   });
 
   /* Handle Login POST */
