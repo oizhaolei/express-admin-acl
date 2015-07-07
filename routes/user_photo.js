@@ -1,14 +1,13 @@
 exports.name = 'user_photo';
 
-exports.authorization = true;
+exports.authorization = false;
 
 exports.show = function(req, res, next){
   var id = req.params.user_photo_id;
   console.log(id);
-  res.render('user_photo', {
-    section: 'user_photos',
-    user_photo_id: id
-  });
+
+  res.locals.user_photo_id = id;
+  res.render('user_photo');
 };
 
 exports.list = function(req, res){

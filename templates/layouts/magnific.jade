@@ -1,0 +1,48 @@
+include ../mixins/flash-messages
+
+doctype html
+html
+  head
+    if env == 'production'
+      script.
+        var _sf_startpt=(new Date()).getTime()
+
+    meta(charset="utf-8")
+    meta(name="viewport", content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width")
+
+    title= title || 'ACL Manager'
+    link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon")
+    link(href='//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css', rel='stylesheet')
+    link(href='//cdn.bootcss.com/x-editable/1.5.1/bootstrap3-editable/css/bootstrap-editable.css', rel='stylesheet')
+    link(href='//cdn.bootcss.com/normalize/3.0.3/normalize.min.css', rel='stylesheet')
+    link(href='//cdn.bootcss.com/magnific-popup.js/1.0.0/magnific-popup.min.css', rel='stylesheet')
+    link(href="/styles/site.min.css", rel="stylesheet")
+    link(href="/style.css", rel="stylesheet")
+
+    block css
+    block head
+  body
+
+
+    //- scripts
+    script(src='//cdn.bootcss.com/jquery/2.1.4/jquery.min.js')
+    script(src='/js/lib/bootstrap/collapse.js')
+    script(src='/js/lib/bootstrap/dropdown.js')
+    script(src='//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js')
+    script(src='//cdn.bootcss.com/handlebars.js/3.0.3/handlebars.min.js')
+    script(src='//cdn.bootcss.com/x-editable/1.5.1/bootstrap3-editable/js/bootstrap-editable.min.js')
+    script(src='//file.tttalk.org/public/jquery/jquery.twbsPagination.js')
+    script(src="//cdn.bootcss.com/jquery.imagesloaded/3.1.8/imagesloaded.pkgd.min.js")
+    script(src="//cdn.bootcss.com/magnific-popup.js/1.0.0/jquery.magnific-popup.min.js")
+    script(src="//file.tttalk.org/public/Wookmark-jQuery/wookmark.js")
+
+    //- body
+    .container
+      //- intro
+      block intro
+      //- messages
+      +flash-messages(messages)
+      //- content
+      block content
+
+    block page-js

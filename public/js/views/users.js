@@ -1,7 +1,7 @@
 var rows_per_page = 7;
 
 $('document').ready(function () {
-  //init jplist with php + mysql data source, json and handlebars template
+  //init users with php + mysql data source, json and handlebars template
 
   retrieveUsers(0);
 
@@ -18,7 +18,7 @@ function init_page_count(pageCount) {
   });
 }
 function retrieveUsers(offset) {
-  var template = Handlebars.compile($('#jplist-template').html());
+  var template = Handlebars.compile($('#users-template').html());
 
   $.ajax( {
     url: '/api/users?offset=' + offset + '&limit=' + rows_per_page

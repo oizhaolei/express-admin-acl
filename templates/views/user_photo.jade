@@ -1,0 +1,16 @@
+extends ../layouts/magnific
+
+block content
+  script#user-photo-template(type="text/x-handlebars-template")
+    .col-sm-6
+      a(href="//file.tttalk.org/original/{{pic_url}}" target="_blank")
+        img(src="//file.tttalk.org/original/{{pic_url}}")
+    .col-sm-6
+        p(class="content") {{content}} {{to_content}}
+
+  #user-photo.lightboxContent
+
+  //- scripts
+  script(type='text/javascript').
+    var user_photo_id = '#{user_photo_id}';
+  script(src='/js/views/user_photo.js')

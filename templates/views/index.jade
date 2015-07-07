@@ -13,9 +13,9 @@ block content
   script#user_photo_template(type="text/x-handlebars-template")
     | {{#each this}}
     li
-      a.photo(href="http://file.tttalk.org/original/{{pic_url}}")
+      a.photo(href="/user_photos/{{_id}}")
         img(src="http://file.tttalk.org/bmiddle/{{pic_url}}" width="200" height="200")
-      a.avatar(href="http://file.tttalk.org/original/{{user_pic}}")
+      a.avatar(href="/users/{{user_id}}")
         img(src="http://file.tttalk.org/thumbnail/{{user_pic}}" width="40" height="40")
       | {{fullname}}
       | {{user_id}}

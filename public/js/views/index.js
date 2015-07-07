@@ -18,7 +18,7 @@ $('document').ready(function () {
   // Init lightbox
   $('#container').magnificPopup({
     delegate: 'li a.photo',
-    type: 'image',
+    type: 'ajax',
     gallery: {
       enabled: true
     }
