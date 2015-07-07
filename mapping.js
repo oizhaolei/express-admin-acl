@@ -69,8 +69,8 @@ module.exports = function(parent, passport, options){
         path = '/';
         break;
       default:
-        /* istanbul ignore next */
-        throw new Error('unrecognized route: ' + name + '.' + key);
+        method = 'get';
+        path = '/' + name + 's/' + key;
       }
 
       // setup

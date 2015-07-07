@@ -22,18 +22,14 @@ html
     block head
   body
     #luka.row
-      .col-sm-11
-      .col-sm-1
+      .col-sm-10
+      .col-sm-2
         ul.navbar-nav
           if user
-            li: a(href='/logout')= user.username
+            li: a.upload-link(href='/') Upload
+            li: a(href='/profile')= user.username
           else
             li: a(href='/login') Login
-
-
-    // //- header
-    // header(role='banner').site-header
-    //   img(src='/images/keystone-arch.jpg', alt='Keystone demo').sr-only
 
     //- scripts
     script(src='//cdn.bootcss.com/jquery/2.1.4/jquery.min.js')

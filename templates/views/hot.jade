@@ -24,11 +24,14 @@ block content
 
   +user-login-dialog
   //- scripts
+  script(type='text/javascript').
+    var entry_point = '/api/populars/hot';
+
   if !user
-    script(type='text/javascript').
+   script(type='text/javascript').
       $('document').ready(function () {
         $(".author-link").click(function(e){
-          $("#myModal").modal();
+          $("#loginModal").modal();
           return false;
         });
       });

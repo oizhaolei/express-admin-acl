@@ -37,7 +37,7 @@ function loadData(minId) {
   $loaderCircle.show();
 
   $.ajax({
-    url: '/api/user_photos?last_id=' + minId
+    url: entry_point + '?last_id=' + minId
   }).then(function(data) {
     rows_per_page = data.rows_per_page;
     populate(data.data);

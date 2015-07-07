@@ -10,9 +10,9 @@ var User_Photo = require('../models/user_photo');
 
 exports.name = 'user_photo';
 
-exports.authorization = false;
+exports.authorization = true;
 
-exports.list = function(req, res, next){
+exports.timeline = function(req, res, next){
   var lastId = req.query.last_id;
 
   var query = User_Photo.find().limit(config.rows_per_page).sort({'_id': -1});
@@ -27,6 +27,10 @@ exports.list = function(req, res, next){
       });
     });
   });
+};
+
+exports.create = function(req, res, next){
+  logger.info('user-photos.create');
 };
 
 // exports.update = function(req, res, next){
@@ -50,10 +54,3 @@ exports.list = function(req, res, next){
 //     res.json({success : true});
 //   });
 // };
-
-exports.show = function(req, res, next){
-  var user_photo_id = req.params.user_photo_id;
-  User_Photo.findOne(mongoose.Types.ObjectId(user_photo_id), function(err, user_photo) {
-    res.json( user_photo );
-  });
-};

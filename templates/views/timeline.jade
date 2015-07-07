@@ -1,5 +1,6 @@
 extends ../layouts/default
 include ../mixins/user-login
+include ../mixins/photo-upload
 
 block content
   h1.bigPageTitle Timeline
@@ -23,7 +24,18 @@ block content
         img(src="images/ajax-loader-line.gif")
 
   +user-login-dialog
+  +photo-upload-dialog
   //- scripts
+  //- scripts
+  script(type='text/javascript').
+    var entry_point = '/api/user_photos/timeline';
+    $('document').ready(function () {
+      $(".upload-link").click(function(e){
+        $("#uploadModal").modal();
+        return false;
+      });
+    });
+
   if !user
     script(type='text/javascript').
       $('document').ready(function () {
