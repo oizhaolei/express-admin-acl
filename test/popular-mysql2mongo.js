@@ -72,7 +72,24 @@ var importUserPhotoRow = function(user_photo){
   });
 };
 
+var importUserStoryLikeRow = function(userStoryLike){
+	var UserPhoto = require('../models/user_photo');
+  var newUserStoryLike = new UserPhoto();
 
+  newUserStoryLike.mysql_id = userStoryLike.id;
+  newUserStoryLike.user_id = userStoryLike.friend_id;
+  newUserStoryLike.pic_url = userStoryLike.pic_url;
+  newUserStoryLike.fullname = userStoryLike.fullname;
+  newUserStoryLike.create_date = userStoryLike.create_date;
+  // save the user
+  UserPhoto.update({mysql_id : userStoryLike.user_photo_id}, { $push: { like_children : newUserStoryLike } }, function(err) {
+    if (err){
+      logger.info('Error in Saving user story like: ' + err);
+      throw err;
+    }
+    logger.info('UserStoryLike Registration succesful ' , (++counter), userStoryLike);
+  });
+};
 
 var importChannelRow = function(channel){
   var Channel = require('../models/channel');
@@ -133,13 +150,14 @@ try {
   logger.info(err);
   properties = {
     user_photo_id : 0,
+    user_story_like_id : 0,
     channel_id : 0
   };
 }
 
 //import user_photo
 var importUserPhoto = function(properties) {
-  var sql = 'select up.*, u.fullname, u.pic_url user_pic from tbl_user_photo up left join tbl_user u on up.userid=u.id where up.id > ? order by up.id limit 100 ';
+  var sql = 'select up.*, u.fullname, u.pic_url user_pic from tbl_user_photo up left join tbl_user u on up.userid=u.id where up.id > ? order by up.id limit 100';
   var args = [ properties.user_photo_id];
 
   logger.info(sql, args);
@@ -182,13 +200,36 @@ var importChannel = function(properties) {
 	});
 };
 
+//import user_story_like
+var importUserStoryLike = function(properties) {
+var sql = 'select a.*,b.fullname,b.pic_url from tbl_user_story_like a, tbl_user b where b.id = a.friend_id and a.id > ? order by a.id limit 10 ';
+var args = [ properties.user_story_like_id];
+
+logger.info(sql, args);
+pool.query(sql, args, function(err, data) {
+  if (err) {
+    console.dir(err);
+  } else {
+    var row;
+    for(var i in data) {
+      row = data[i];
+
+      importUserStoryLikeRow(row);
+    }
+    properties.user_story_like_id = row.id;
+    writeProperties(properties);
+  }
+});
+};
+
 
 // tbl_user_photo
-importUserPhoto(properties);
+//importUserPhoto(properties);
 // tbl_user_story_like
+importUserStoryLike(properties);
 // tbl_user_story_translate
 // tbl_user_story_translate_like
 // tbl_channel
-importChannel(properties);
+//importChannel(properties);
 // tbl_channel_title_translate
 // tbl_channel_follower
