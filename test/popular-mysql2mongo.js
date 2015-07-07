@@ -72,6 +72,41 @@ var importUserPhotoRow = function(user_photo){
   });
 };
 
+
+
+var importChannelRow = function(channel){
+  var Channel = require('../models/channel');
+  Channel.findOne({ 'old_id' :  channel.id }, function(err, channel_check) {
+    if (err){
+      console.dir(err);
+      return;
+    }
+    if (channel_check) {
+      logger.info('Channel already exists with id: '+channel_check.id);
+    } else {
+      var newChannel = new Channel();
+
+      newChannel.mysql_id = channel.id;
+      newChannel.pic_url = channel.pic_url;
+      newChannel.follower_count = channel.follower_count;
+      newChannel.popular_count = channel.popular_count;
+      newChannel.category = channel.category;
+      newChannel.recommend = channel.recommend;
+      newChannel.old_channel_id = channel.old_channel_id;
+      newChannel.create_id = channel.create_id;
+      newChannel.create_date = channel.create_date;
+      // save the user
+      newChannel.save(function(err) {
+        if (err){
+          logger.info('Error in Saving Channel: '+err);
+          throw err;
+        }
+        logger.info('Channel Registration succesful ' , (++counter), channel);
+      });
+    }
+  });
+};
+
 //write properties
 var writeProperties = function(properties) {
   var data = JSON.stringify(properties);
@@ -97,7 +132,8 @@ try {
 } catch (err) {
   logger.info(err);
   properties = {
-    user_photo_id : 0
+    user_photo_id : 0,
+    channel_id : 0
   };
 }
 
@@ -124,6 +160,28 @@ var importUserPhoto = function(properties) {
 
 };
 
+//import channel
+var importChannel = function(properties) {
+	var sql = 'select * from tbl_channel where id > ? order by id limit 100 ';
+	var args = [ properties.channel_id];
+	
+	logger.info(sql, args);
+	pool.query(sql, args, function(err, data) {
+	  if (err) {
+	    console.dir(err);
+	  } else {
+	    var row;
+	    for(var i in data) {
+	      row = data[i];
+	
+	      importChannelRow(row);
+	    }
+	    properties.channel_id = row.id;
+	    writeProperties(properties);
+	  }
+	});
+};
+
 
 // tbl_user_photo
 importUserPhoto(properties);
@@ -131,5 +189,6 @@ importUserPhoto(properties);
 // tbl_user_story_translate
 // tbl_user_story_translate_like
 // tbl_channel
+importChannel(properties);
 // tbl_channel_title_translate
 // tbl_channel_follower
