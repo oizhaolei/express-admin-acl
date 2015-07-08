@@ -26,7 +26,7 @@ html
       .col-sm-2
         ul.navbar-nav
           if user
-            li: a.upload-link(href='/') Upload
+            li: a.upload-popup(href='/upload') Upload
             li: a(href='/profile')= user.username
           else
             li: a(href='/login') Login
@@ -37,9 +37,8 @@ html
     script(src='//cdn.bootcss.com/handlebars.js/3.0.3/handlebars.min.js')
     script(src='//cdn.bootcss.com/x-editable/1.5.1/bootstrap3-editable/js/bootstrap-editable.min.js')
     script(src='//file.tttalk.org/public/jquery/jquery.twbsPagination.js')
-    script(src="//cdn.bootcss.com/jquery.imagesloaded/3.1.8/imagesloaded.pkgd.min.js")
     script(src="//cdn.bootcss.com/magnific-popup.js/1.0.0/jquery.magnific-popup.min.js")
-    script(src="//file.tttalk.org/public/Wookmark-jQuery/wookmark.js")
+    script(src="//file.tttalk.org/public/jquery-waterfall-plugin/waterfall.min.js")
 
     //- body
     #page.container.wrapper

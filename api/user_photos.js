@@ -54,3 +54,10 @@ exports.create = function(req, res, next){
 //     res.json({success : true});
 //   });
 // };
+
+exports.show = function(req, res, next){
+  var user_photo_id = req.params.user_photo_id;
+  User_Photo.findOne(mongoose.Types.ObjectId(user_photo_id), function(err, user_photo) {
+    res.json( user_photo );
+  });
+};
