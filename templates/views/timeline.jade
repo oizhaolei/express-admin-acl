@@ -1,5 +1,4 @@
 extends ../layouts/default
-include ../mixins/user-login
 
 block content
   h1.bigPageTitle Timeline
@@ -18,7 +17,7 @@ block content
 
   #container(style="width: 1000px; margin: 0 auto;")
 
-  +user-login-dialog
+block page-js
   //- scripts
   script(type='text/javascript').
     var entry_point = '/api/user_photos/timeline';
