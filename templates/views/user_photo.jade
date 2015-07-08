@@ -17,5 +17,7 @@ block content
 
   //- scripts
   script(type='text/javascript').
-    var user_photo_id = '#{user_photo_id}';
+    var photo_entry_point = "/api/populars/#{user_photo_id}";
+block page-js
+
   script(src='/js/views/user_photo.js')

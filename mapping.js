@@ -156,13 +156,6 @@ module.exports = function(parent, passport, options){
   });
 
   /* Handle Login POST */
-  parent.get('/login',function(req, res){
-    res.render('login', {
-      message: req.flash('message'),
-      url : req.query.url
-    });
-  });
-
   parent.post('/login', passport.authenticate('login'), function(req, res) {
     if (req.done) {
       var url = req.body.url;

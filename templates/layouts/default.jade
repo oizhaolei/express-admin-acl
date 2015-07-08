@@ -28,15 +28,7 @@ html
           if user
             a(href='/profile')= user.username
           else
-            a(href='/login') Login
-
-    //- scripts
-    script(src='//cdn.bootcss.com/jquery/2.1.4/jquery.min.js')
-    script(src='//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js')
-    script(src='//cdn.bootcss.com/handlebars.js/3.0.3/handlebars.min.js')
-    script(src="//cdn.bootcss.com/magnific-popup.js/1.0.0/jquery.magnific-popup.min.js")
-    script(src="//file.tttalk.org/public/jquery-waterfall-plugin/waterfall.min.js")
-
+            a.author-link(href='/login') Login
     //- body
     #page.container.wrapper
       //- intro
@@ -49,5 +41,13 @@ html
     .site-footer: .container.text-center
       p Copyright &copy; 2015 TTTalk.org. All rights reserved.
       p: a(href="https://tttalk.org") @tttalk
+
+
+    //- scripts
+    script(src='//cdn.bootcss.com/jquery/2.1.4/jquery.min.js')
+    script(src='//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js')
+    script(src='//cdn.bootcss.com/handlebars.js/3.0.3/handlebars.min.js')
+    script(src="//cdn.bootcss.com/magnific-popup.js/1.0.0/jquery.magnific-popup.min.js")
+    script(src="//file.tttalk.org/public/jquery-waterfall-plugin/waterfall.min.js")
 
     block page-js
