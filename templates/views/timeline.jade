@@ -1,46 +1,32 @@
 extends ../layouts/default
-include ../mixins/user-login
-include ../mixins/photo-upload
 
 block content
   h1.bigPageTitle Timeline
-  script#user_photo_template(type="text/x-handlebars-template")
+  script#waterfall-tpl(type="text/x-handlebars-template")
     | {{#each this}}
-    li
+    .item
       a.photo(href="/user_photos/{{_id}}")
-        img(src="http://file.tttalk.org/bmiddle/{{pic_url}}" width="200" height="200")
+        img(src="http://file.tttalk.org/bmiddle/{{pic_url}}" width="240" height="240")
       a.avatar(href="/users/{{user_id}}")
-        img(src="http://file.tttalk.org/thumbnail/{{user_pic}}" width="40" height="40")
+        img.img-circle(src="http://file.tttalk.org/thumbnail/{{user_pic}}" width="40" height="40")
       | {{fullname}}
       | {{user_id}}
       p {{content}}
       p {{to_content}}
     | {{/each}}
 
-  div(role="main")
-    ul#container.tiles-wrap.animated
-    #loader
-      #loaderCircle
-        img(src="images/ajax-loader-line.gif")
+  #container(style="width: 1000px; margin: 0 auto;")
 
-  +user-login-dialog
-  +photo-upload-dialog
-  //- scripts
+block page-js
   //- scripts
   script(type='text/javascript').
     var entry_point = '/api/user_photos/timeline';
-    $('document').ready(function () {
-      $(".upload-link").click(function(e){
-        $("#uploadModal").modal();
-        return false;
-      });
-    });
 
   if !user
     script(type='text/javascript').
       $('document').ready(function () {
         $(".author-link").click(function(e){
-          $("#myModal").modal();
+          $("#loginModal").modal();
           return false;
         });
       });

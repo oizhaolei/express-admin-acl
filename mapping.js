@@ -120,7 +120,7 @@ module.exports = function(parent, passport, options){
         break;
       case 'index':
         method = 'get';
-        path = '/';
+        path = '/' + name;
         break;
       default:
         method = 'get';

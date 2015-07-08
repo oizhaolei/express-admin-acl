@@ -1,0 +1,15 @@
+extends ../layouts/magnific
+
+block content
+  .row
+    .col-sm-3
+    .col-sm-6
+      form(action="/user_photos", method="post", enctype="multipart/form-data")
+        input(type="text", name="content")
+        input(type="file", multiple, name="image")
+        button(type="submit", value="Upload") Upload File
+      .modal-footer
+        button.btn.btn-danger.btn-default.pull-left(type="submit" data-dismiss="modal")
+          span.glyphicon.glyphicon-remove
+          | Cancel
+      .col-sm-3

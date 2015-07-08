@@ -3,26 +3,23 @@ include ../mixins/user-login
 
 block content
   h1.bigPageTitle Hot
-  script#user_photo_template(type="text/x-handlebars-template")
+  script#waterfall-tpl(type="text/x-handlebars-template")
     | {{#each this}}
-    li
+    .item
       a.photo(href="/user_photos/{{_id}}")
-        img(src="http://file.tttalk.org/bmiddle/{{pic_url}}" width="200" height="200")
+        img(src="http://file.tttalk.org/bmiddle/{{pic_url}}" width="240" height="240")
       a.avatar(href="/users/{{user_id}}")
-        img(src="http://file.tttalk.org/thumbnail/{{user_pic}}" width="40" height="40")
+        img.img-circle(src="http://file.tttalk.org/thumbnail/{{user_pic}}" width="40" height="40")
       | {{fullname}}
       | {{user_id}}
       p {{content}}
       p {{to_content}}
     | {{/each}}
 
-  div(role="main")
-    ul#container.tiles-wrap.animated
-    #loader
-      #loaderCircle
-        img(src="images/ajax-loader-line.gif")
+  #container(style="width: 1000px; margin: 0 auto;")
 
   +user-login-dialog
+block page-js
   //- scripts
   script(type='text/javascript').
     var entry_point = '/api/populars/hot';
