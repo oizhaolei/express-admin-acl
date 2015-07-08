@@ -74,26 +74,87 @@ var importUserPhotoRow = function(user_photo){
 
 var importUserStoryLikeRow = function(userStoryLike){
 	var UserPhoto = require('../models/user_photo');
-  var newUserStoryLike = new UserPhoto();
+	 UserPhoto.findOne({ 'mysql_id' :  userStoryLike.user_photo_id }, function(err, userPhoto) {
+	    // In case of any error, return using the done method
+	    if (err){
+	      console.dir(err);
+	      return;
+	    }
+		  var newUserStoryLike = new UserPhoto();
+		
+		  newUserStoryLike.mysql_id = userStoryLike.id;
+		  newUserStoryLike.user_id = userStoryLike.friend_id;
+		  newUserStoryLike.pic_url = userStoryLike.pic_url;
+		  newUserStoryLike.fullname = userStoryLike.fullname;
+		  newUserStoryLike.create_date = userStoryLike.create_date;
+		  // save the user
+		  UserPhoto.update({mysql_id : userStoryLike.user_photo_id}, { $push: { like_children : newUserStoryLike } }, function(err) {
+		    if (err){
+		      logger.info('Error in Saving user story like: ' + err);
+		      throw err;
+		    }
+		    logger.info('UserStoryLike Registration succesful ' , (++counter), userStoryLike);
+		  });
+	 });
+};
 
-  newUserStoryLike.mysql_id = userStoryLike.id;
-  newUserStoryLike.user_id = userStoryLike.friend_id;
-  newUserStoryLike.pic_url = userStoryLike.pic_url;
-  newUserStoryLike.fullname = userStoryLike.fullname;
-  newUserStoryLike.create_date = userStoryLike.create_date;
-  // save the user
-  UserPhoto.update({mysql_id : userStoryLike.user_photo_id}, { $push: { like_children : newUserStoryLike } }, function(err) {
-    if (err){
-      logger.info('Error in Saving user story like: ' + err);
-      throw err;
-    }
-    logger.info('UserStoryLike Registration succesful ' , (++counter), userStoryLike);
-  });
+var importUserStoryTranslateRow = function(userStoryTranslate){
+	var UserPhoto = require('../models/user_photo');
+	 UserPhoto.findOne({ 'mysql_id' :  userStoryTranslate.user_photo_id }, function(err, userPhoto) {
+	    // In case of any error, return using the done method
+	    if (err){
+	      console.dir(err);
+	      return;
+	    }
+		  var newUserStoryTranslate = new UserPhoto();
+		
+		  newUserStoryTranslate.mysql_id = userStoryTranslate.id;
+		  newUserStoryTranslate.lang = userStoryTranslate.lang;
+		  newUserStoryTranslate.content = userStoryTranslate.to_content;
+		  newUserStoryTranslate.user_id = userStoryTranslate.user_id;
+		  newUserStoryTranslate.pic_url = userStoryTranslate.pic_url;
+		  newUserStoryTranslate.fullname = userStoryTranslate.fullname;
+		  newUserStoryTranslate.create_date = userStoryTranslate.create_date;
+		  // save the user
+		  UserPhoto.update({mysql_id : userStoryTranslate.user_photo_id}, { $push: { translate_children : newUserStoryTranslate } }, function(err) {
+		    if (err){
+		      logger.info('Error in Saving user story translate: ' + err);
+		      throw err;
+		    }
+		    logger.info('UserStoryTranslate Registration succesful ' , (++counter), userStoryTranslate);
+		  });
+	 });
+};
+
+var importUserStoryTranslateLikeRow = function(userStoryTranslateLike){
+	var UserPhoto = require('../models/user_photo');
+	 UserPhoto.findOne({ 'mysql_id' :  userStoryTranslateLike.user_photo_id }, function(err, userPhoto) {
+	    // In case of any error, return using the done method
+	    if (err){
+	      console.dir(err);
+	      return;
+	    }
+		  var newUserStoryTranslateLike = new UserPhoto();
+		
+		  newUserStoryTranslateLike.mysql_id = userStoryTranslateLike.id;
+		  newUserStoryTranslateLike.user_id = userStoryTranslateLike.user_id;
+		  newUserStoryTranslateLike.pic_url = userStoryTranslateLike.pic_url;
+		  newUserStoryTranslateLike.fullname = userStoryTranslateLike.fullname;
+		  newUserStoryTranslateLike.create_date = userStoryTranslateLike.create_date;
+		  // save the user
+		  UserPhoto.update({mysql_id : userStoryTranslateLike.user_photo_id}, { $push: { "translate_children.translate_like_children" : newUserStoryTranslateLike } }, function(err) {
+		    if (err){
+		      logger.info('Error in Saving user story translate like: ' + err);
+		      throw err;
+		    }
+		    logger.info('UserStoryTranslateLike Registration succesful ' , (++counter), userStoryTranslateLike);
+		  });
+	 });
 };
 
 var importChannelRow = function(channel){
   var Channel = require('../models/channel');
-  Channel.findOne({ 'old_id' :  channel.id }, function(err, channel_check) {
+  Channel.findOne({ 'mysql_id' :  channel.id }, function(err, channel_check) {
     if (err){
       console.dir(err);
       return;
@@ -124,6 +185,57 @@ var importChannelRow = function(channel){
   });
 };
 
+var importChannelTitleTranslateRow = function(channelTitleTranslate){
+	var Channel = require('../models/channel');
+		Channel.findOne({ 'mysql_id' :  channelTitleTranslate.channel_id }, function(err, channel) {
+	    // In case of any error, return using the done method
+	    if (err){
+	      console.dir(err);
+	      return;
+	    }
+		  var newChannelTitleTranslate = new Channel().title_children;
+		
+		  newChannelTitleTranslate.mysql_id = channelTitleTranslate.id;
+		  newChannelTitleTranslate.lang = channelTitleTranslate.lang;
+		  newChannelTitleTranslate.title = channelTitleTranslate.title;
+		  newChannelTitleTranslate.create_date = channelTitleTranslate.create_date;
+		  // save the user
+		  Channel.update({mysql_id : channelTitleTranslate.channel_id}, { $push: { title_children : newChannelTitleTranslate } }, function(err) {
+		    if (err){
+		      logger.info('Error in Saving channel title translate: ' + err);
+		      throw err;
+		    }
+		    logger.info('ChannelTitleTranslate Registration succesful ' , (++counter), channelTitleTranslate);
+		  });
+	 });
+};
+
+var importChannelFollowerRow = function(channelFollower){
+	var Channel = require('../models/channel');
+		Channel.findOne({ 'mysql_id' :  channelFollower.channel_id }, function(err, channel) {
+	    // In case of any error, return using the done method
+	    if (err){
+	      console.dir(err);
+	      return;
+	    }
+		  var newChannelFollowere = new Channel().follower_children;
+		
+		  newChannelFollowere.mysql_id = channelFollower.id;
+		  newChannelFollowere.user_id = channelFollower.user_id;
+		  newChannelFollowere.pic_url = channelFollower.pic_url;
+		  newChannelFollowere.fullname = channelFollower.fullname;
+		  newChannelFollowere.create_date = channelFollower.create_date;
+		  // save the user
+		  Channel.update({mysql_id : channelFollower.channel_id}, { $push: { follower_children : newChannelFollowere } }, function(err) {
+		    if (err){
+		      logger.info('Error in Saving channel title translate: ' + err);
+		      throw err;
+		    }
+		    logger.info('ChannelFollower Registration succesful ' , (++counter), channelFollower);
+		  });
+	 });
+};
+
 //write properties
 var writeProperties = function(properties) {
   var data = JSON.stringify(properties);
@@ -151,7 +263,11 @@ try {
   properties = {
     user_photo_id : 0,
     user_story_like_id : 0,
-    channel_id : 0
+    user_story_translate_id : 0,
+    user_story_translate_like_id : 0,
+    channel_id : 0,
+    channel_title_translate_id : 0,
+    channel_follower_id : 0
   };
 }
 
@@ -202,8 +318,96 @@ var importChannel = function(properties) {
 
 //import user_story_like
 var importUserStoryLike = function(properties) {
-var sql = 'select a.*,b.fullname,b.pic_url from tbl_user_story_like a, tbl_user b where b.id = a.friend_id and a.id > ? order by a.id limit 10 ';
-var args = [ properties.user_story_like_id];
+	var sql = 'select a.*,b.fullname,b.pic_url from tbl_user_story_like a, tbl_user b where b.id = a.friend_id and a.id > ? order by a.id limit 100 ';
+	var args = [ properties.user_story_like_id];
+	
+	logger.info(sql, args);
+	pool.query(sql, args, function(err, data) {
+	  if (err) {
+	    console.dir(err);
+	  } else {
+	    var row;
+	    for(var i in data) {
+	      row = data[i];
+	
+	      importUserStoryLikeRow(row);
+	    }
+	    properties.user_story_like_id = row.id;
+	    writeProperties(properties);
+	  }
+	});
+};
+
+//import user_story_translate
+var importUserStoryTranslate = function(properties) {
+	var sql = 'select a.*,b.fullname,b.pic_url from tbl_user_story_translate a left join tbl_user b on b.id = a.user_id where a.id > ? order by a.id limit 100 ';
+	var args = [ properties.user_story_translate_id];
+	
+	logger.info(sql, args);
+	pool.query(sql, args, function(err, data) {
+	  if (err) {
+	    console.dir(err);
+	  } else {
+	    var row;
+	    for(var i in data) {
+	      row = data[i];
+	
+	      importUserStoryTranslateRow(row);
+	    }
+	    properties.user_story_translate_id = row.id;
+	    writeProperties(properties);
+	  }
+	});
+};
+
+//import user_story_translate_like
+var importUserStoryTranslateLike = function(properties) {
+	var sql = 'select a.*,b.fullname,b.pic_url from tbl_user_story_translate_like a, tbl_user b where b.id = a.friend_id and a.id > ? order by a.id limit 100 ';
+	var args = [ properties.user_story_translate_like_id];
+	
+	logger.info(sql, args);
+	pool.query(sql, args, function(err, data) {
+	  if (err) {
+	    console.dir(err);
+	  } else {
+	    var row;
+	    for(var i in data) {
+	      row = data[i];
+	
+	      importUserStoryTranslateLikeRow(row);
+	    }
+	    properties.user_story_translate_like_id = row.id;
+	    writeProperties(properties);
+	  }
+	});
+};
+
+//import channel_title_translate
+var importChannelTitleTranslate = function(properties) {
+	var sql = 'select * from tbl_channel_title_translate where id > ? order by id limit 100 ';
+	var args = [ properties.channel_title_translate_id];
+	
+	logger.info(sql, args);
+	pool.query(sql, args, function(err, data) {
+	  if (err) {
+	    console.dir(err);
+	  } else {
+	    var row;
+	    for(var i in data) {
+	      row = data[i];
+	
+	      importChannelTitleTranslateRow(row);
+	    }
+	    properties.channel_title_translate_id = row.id;
+	    writeProperties(properties);
+	  }
+	});
+};
+
+//import channel_follower
+var importChannelFollower = function(properties) {
+var sql = 'select a.*,b.fullname,b.pic_url from tbl_channel_follower a, tbl_user b where b.id = a.user_id and a.id > ? order by a.id limit 100 ';
+var args = [ properties.channel_follower_id];
 
 logger.info(sql, args);
 pool.query(sql, args, function(err, data) {
@@ -214,9 +418,9 @@ pool.query(sql, args, function(err, data) {
     for(var i in data) {
       row = data[i];
 
-      importUserStoryLikeRow(row);
+      importChannelFollowerRow(row);
     }
-    properties.user_story_like_id = row.id;
+    properties.channel_follower_id = row.id;
     writeProperties(properties);
   }
 });
@@ -226,10 +430,14 @@ pool.query(sql, args, function(err, data) {
 // tbl_user_photo
 //importUserPhoto(properties);
 // tbl_user_story_like
-importUserStoryLike(properties);
+//importUserStoryLike(properties);
 // tbl_user_story_translate
+//importUserStoryTranslate(properties);
 // tbl_user_story_translate_like
+//importUserStoryTranslateLike(properties);
 // tbl_channel
 //importChannel(properties);
 // tbl_channel_title_translate
+//	importChannelTitleTranslate(properties);
 // tbl_channel_follower
+//importChannelFollower(properties);
