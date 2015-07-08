@@ -1,0 +1,37 @@
+extends ../layouts/default
+
+block css
+  link(href='//cdn.bootcss.com/x-editable/1.5.1/bootstrap3-editable/css/bootstrap-editable.css', rel='stylesheet')
+block content
+  .row
+    .col-sm-11
+    .col-sm-1
+      button#deletebtn.btn.btn-warning( type="button" ) Delete
+  table#usertbl(class="table table-bordered table-striped")
+    tr
+      td(width="35%") Username
+      td
+        a#username(href="#" data-type="text" data-pk="#{user_id}")
+    tr
+      td Password
+      td
+        a#password(href="#" data-type="text" data-pk="#{user_id}")
+    tr
+      td Email
+      td
+        a#email(href="#" data-type="text" data-pk="#{user_id}")
+    tr
+      td FirstName
+      td
+        a#firstName(href="#" data-type="text" data-pk="#{user_id}")
+    tr
+      td LastName
+      td
+        a#lastName(href="#" data-type="text" data-pk="#{user_id}")
+
+  //- scripts
+  script(type='text/javascript').
+    var user_id = '#{user._id}';
+block page-js
+  script(src='//cdn.bootcss.com/x-editable/1.5.1/bootstrap3-editable/js/bootstrap-editable.min.js')
+  script(src='/js/views/profile.js')

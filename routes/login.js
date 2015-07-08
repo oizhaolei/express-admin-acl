@@ -1,6 +1,6 @@
 exports.name = 'login';
 
-exports.authorization = true;
+exports.authorization = false;
 
 exports.index = function(req, res){
   console.log("login");
