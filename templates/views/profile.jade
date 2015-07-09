@@ -4,7 +4,8 @@ block css
   link(href='//cdn.bootcss.com/x-editable/1.5.1/bootstrap3-editable/css/bootstrap-editable.css', rel='stylesheet')
 block content
   .row
-    .col-sm-11
+    .col-sm-10
+    .col-sm-1
     .col-sm-1
       button#deletebtn.btn.btn-warning( type="button" ) Delete
   table#usertbl(class="table table-bordered table-striped")
@@ -28,6 +29,7 @@ block content
       td LastName
       td
         a#lastName(href="#" data-type="text" data-pk="#{user_id}")
+  a(href="/logout" ) Logout
 
   //- scripts
   script(type='text/javascript').
