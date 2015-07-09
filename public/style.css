@@ -1,13 +1,6 @@
 body {
     font: 16px "Helvetica Neue", Helvetica, Arial;
 }
-a {
-    color: #107aff;
-    text-decoration: none;
-}
-a:hover {
-    text-decoration: underline;
-}
 h1 a {
     font-size: 16px;
 }
@@ -239,13 +232,6 @@ fieldset {
     top:0; left:0;
     width: 100%; }
 
-
-a:link, a:visited {
-    color: #333;
-}
-a:hover {
-    color: #c30;
-}
 
 /*
  * header
