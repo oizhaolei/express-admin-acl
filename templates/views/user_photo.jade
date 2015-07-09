@@ -2,16 +2,26 @@ extends ../layouts/magnific
 
 block content
   script#user-photo-template(type="text/x-handlebars-template")
-    .row.cards
-      .col-sm-6
-        a(href="//file.tttalk.org/original/{{pic_url}}" target="_blank")
-          img(src="//file.tttalk.org/original/{{pic_url}}")
-      .col-sm-6
-        p(class="content") {{content}} {{to_content}}
-        | {{#each children}}
-        .row
-          .col-sm-12 {{content}}
-        | {{/each}}
+    .row.cards(style="padding:15px;")
+      .col-sm-12(style="background-color:white;text-align:center;padding:15px;")
+        img(style="max-width:98%;" src="//file.tttalk.org/original/{{pic_url}}")
+        .col-sm-12(style="text-align:left;padding:10px;")
+          img.img-circle(src="http://file.tttalk.org/thumbnail/{{user_pic}}" width="60" height="60")
+          span.span-text-large{{fullname}} -
+          span.span-text-small{{create_date}}
+          br
+          span.span-text-medium{{content}} {{to_content}}
+          br
+          | {{#each children}}
+          hr
+          .col-sm-12(style="text-align:left;")
+            img.img-circle(src="http://file.tttalk.org/thumbnail/{{user_pic}}" width="50" height="50")
+            span.span-text-large{{fullname}} -
+            span.span-text-small{{create_date}}
+            br
+            span.span-text-medium{{content}} {{to_content}}
+            hr
+          | {{/each}}
 
   #user-photo
 
