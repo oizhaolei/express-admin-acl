@@ -2,26 +2,27 @@ extends ../layouts/magnific
 
 block content
   script#user-photo-template(type="text/x-handlebars-template")
-    .row.cards(style="padding:15px;")
-      .col-sm-12(style="background-color:white;text-align:center;padding:15px;")
-        img(style="max-width:98%;" src="//file.tttalk.org/original/{{pic_url}}")
-        .col-sm-12(style="text-align:left;padding:10px;")
+    .row.cards(style="margin:10px;")
+      .col-sm-12.div-round(style="text-align:center;")
+        img(style="max-width:100%;padding:10px;" src="//file.tttalk.org/original/{{pic_url}}")
+      .col-sm-12.div-round(style="margin-top:10px;padding:10px;")
+        .col-sm-12(style="width:10%;float:left;")
           img.img-circle(src="http://file.tttalk.org/thumbnail/{{user_pic}}" width="60" height="60")
+        .col-sm-12(style="width:90%;float:right;")
           span.span-text-large{{fullname}} -
           span.span-text-small{{create_date}}
           br
           span.span-text-medium{{content}} {{to_content}}
+      | {{#each children}}
+      .col-sm-12.div-round(style="margin-top:1px;")
+        .col-sm-12(style="width:10%;float:left;")
+          img.img-circle(src="http://file.tttalk.org/thumbnail/{{user_pic}}" width="50" height="50")
+        .col-sm-12(style="width:90%;float:right;")
+          span.span-text-large{{fullname}} -
+          span.span-text-small{{create_date}}
           br
-          | {{#each children}}
-          hr
-          .col-sm-12(style="text-align:left;")
-            img.img-circle(src="http://file.tttalk.org/thumbnail/{{user_pic}}" width="50" height="50")
-            span.span-text-large{{fullname}} -
-            span.span-text-small{{create_date}}
-            br
-            span.span-text-medium{{content}} {{to_content}}
-            hr
-          | {{/each}}
+          span.span-text-medium{{content}} {{to_content}}
+      | {{/each}}
 
   #user-photo
 
