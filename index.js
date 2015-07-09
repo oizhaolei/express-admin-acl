@@ -6,6 +6,7 @@ var logger = require('log4js').getLogger('index.js');
 
 var express = require('express');
 var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
@@ -46,7 +47,8 @@ app.use(express.static(__dirname + '/public'));
 app.use(session({
   resave: false, // don't save session if unmodified
   saveUninitialized: false, // don't create session until something stored
-  secret: 'some secret here'
+  secret: 'some secret here',
+  store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
 var passport = require('passport');
