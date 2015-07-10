@@ -4,8 +4,9 @@ var minId = '',
 
 
 $('document').ready(function () {
-  $('.upload-popup').magnificPopup({
-    type: 'ajax'
+  $(".upload-popup").click(function(e){
+    $("#uploadModal").modal();
+    return false;
   });
 
   // Init lightbox
