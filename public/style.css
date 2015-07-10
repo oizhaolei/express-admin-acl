@@ -352,3 +352,9 @@ fieldset {
         left:20%;
         right:20%;
 }
+#fileupload {
+}
+.upload-area {
+    width:250px;
+    height:250px;
+}

@@ -27,7 +27,9 @@
   },
   "homepage": "https://github.com/oizhaolei/express-admin-acl",
   "dependencies": {
+    "MD5": "^1.2.2",
     "acl": "^0.4.7",
+    "aliyun-sdk": "^1.5.2",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.13.1",
     "connect-flash": "^0.1.1",
@@ -36,6 +38,7 @@
     "csv": "^0.4.5",
     "express": "^4.13.0",
     "express-session": "^1.11.3",
+    "formidable": "^1.0.17",
     "jade": "^1.11.0",
     "lodash": "^3.10.0",
     "log4js": "^0.6.26",
