@@ -4,11 +4,20 @@ var minId = '',
 
 
 $('document').ready(function () {
-  $(".upload-popup").click(function(e){
-    $("#uploadModal").modal();
-    return false;
+  Dropzone.options.myAwesomeDropzone = {
+    uploadMultiple: false,
+    maxFilesize: 5,
+    init: function() {
+      this.on("success", function(file, responseText, e) {
+        console.info(responseText.filename);
+        $('#pic_url').val(responseText.filename);
+        $(".user-photo").show();
+      });
+    }
+  };
+  $('#post-user-photo').click(function(){
+    console.info("post user_photo");
   });
-
   // Init lightbox
   $('#container').magnificPopup({
     delegate: 'div.item a.photo',

@@ -5,13 +5,8 @@
 var logger = require('log4js').getLogger('api/user_photos.js');
 var config = require('../config.json');
 
-var fs = require("fs");
-var formidable = require("formidable");
-
 var mongoose = require('mongoose');
 var User_Photo = require('../models/user_photo');
-var oss = require('../lib/oss');
-var md5 = require('MD5');
 
 exports.name = 'user_photo';
 
@@ -36,23 +31,6 @@ exports.timeline = function(req, res, next){
 
 exports.create = function(req, res, next){
   logger.info('user-photos.create');
-  var form = new formidable.IncomingForm();
-  form.parse(req, function(error, fields, files) {
-    logger.info(files.file.path);
-    if (typeof (files.file) != "undefined" && typeof (files.file.path) != "undefined") {
-      fs.readFile(files.file.path, function(err, buf) {
-        var filename = md5(buf);
-        oss.putObjectCallback(files.file.path, config.aliyun.oss.originalPrefix + filename, 'image/jpeg', 0);
-        res.json({
-          files : [
-            {name : 'http://file.tttalk.org/' + config.aliyun.oss.originalPrefix + filename}
-          ]
-        });
-      });
-    }else{
-      logger.error(error);
-    }
-  });
 };
 
 // exports.update = function(req, res, next){

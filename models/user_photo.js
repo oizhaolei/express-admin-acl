@@ -52,11 +52,11 @@ var UserPhotoSchema = new mongoose.Schema ({
     lang : String,
     content : String,
     translate_like_children : {
-      	mysql_id : Number,
-        user_id : Number,
-        pic_url : String,
-        fullname : String,
-	      create_date : Date
+      mysql_id : Number,
+      user_id : Number,
+      pic_url : String,
+      fullname : String,
+      create_date : Date
     }
   }
 });
