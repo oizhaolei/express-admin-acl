@@ -12,7 +12,17 @@ block content
           span.span-text-large{{fullname}} -
           span.span-text-small{{create_date}}
           br
-          span.span-text-medium{{content}} {{to_content}}
+          img(src="/images/{{lang}}.png" width="25" height="15")
+          span.span-text-medium{{content}}
+          | {{#each translate_children}}
+          br
+          img(src="/images/{{lang}}.png" width="25" height="15")
+          span.span-text-medium{{content}}
+          | {{/each}}
+      .col-sm-12.div-round(style="margin-top:1px")
+        | {{#each like_children}}
+        img.img-circle(src="http://file.tttalk.org/thumbnail/{{pic_url}}" width="50" height="50" style="margin:5px;")
+        | {{/each}}
       | {{#each children}}
       .col-sm-12.div-round(style="margin-top:1px;")
         .col-sm-12(style="width:10%;float:left;")
@@ -21,7 +31,13 @@ block content
           span.span-text-large{{fullname}} -
           span.span-text-small{{create_date}}
           br
-          span.span-text-medium{{content}} {{to_content}}
+          img(src="/images/{{lang}}.png" width="25" height="15")
+          span.span-text-medium{{content}}
+          | {{#each comment_translate_children}}
+          br
+          img(src="/images/{{lang}}.png" width="25" height="15")
+          span.span-text-medium{{content}}
+          | {{/each}}
       | {{/each}}
 
   #user-photo
