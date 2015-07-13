@@ -1,5 +1,6 @@
 
 var mongoose = require('mongoose');
+var UserPhotoComment = require('./user_photo_comment');
 
 var UserPhotoSchema = new mongoose.Schema ({
   mysql_id : Number,
@@ -22,21 +23,7 @@ var UserPhotoSchema = new mongoose.Schema ({
   chosen : Number,
   create_id : String,
   create_date : Date,
-  children : {
-    mysql_id : Number,
-    user_id : Number,
-    pic_url : String,
-    fullname : String,
-    user_pic : String,
-    content : String,
-    lang : String,
-    address : String,
-    late6 : Number,
-    lnge6 : Number,
-    width : Number,
-    height : Number,
-    create_date : Date
-  },
+  children : [UserPhotoComment.UserPhotoCommentSchema],
   like_children : {
     mysql_id : Number,
     user_id : Number,
@@ -50,14 +37,6 @@ var UserPhotoSchema = new mongoose.Schema ({
     pic_url : String,
     fullname : String,
     lang : String,
-    content : String,
-    translate_like_children : {
-      mysql_id : Number,
-      user_id : Number,
-      pic_url : String,
-      fullname : String,
-      create_date : Date
-    }
-  }
+    content : String
 });
 module.exports = mongoose.model('UserPhoto', UserPhotoSchema);
