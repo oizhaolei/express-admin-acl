@@ -13,30 +13,31 @@ block content
           span.span-text-large{{fullname}} -
           span.span-text-small{{create_date}}
           br
-          img(src="/images/{{lang}}.png" width="25" height="15")
+          img(src="/images/{{lang}}.png" width="25" height="15" style="margin-left:10px;")
           span.span-text-medium{{content}}
           | {{#each translate_children}}
           br
-          img(src="/images/{{lang}}.png" width="25" height="15")
+          img(src="/images/{{lang}}.png" width="25" height="15" style="margin-left:10px;")
           span.span-text-medium{{content}}
           | {{/each}}
-      .col-sm-12.div-round(style="margin-top:1px")
+      .col-sm-12.div-round(style="margin-top:10px;margin-bottom:10px;height:60px;")
         | {{#each like_children}}
         img.img-circle(src="http://file.tttalk.org/thumbnail/{{pic_url}}" width="50" height="50" style="margin:5px;")
         | {{/each}}
+        span.span-text-medium(style="line-height:60px;") LIKE
       | {{#each children}}
-      .col-sm-12.div-round(style="margin-top:1px;")
+      .col-sm-12.div-round(style="margin-top:1px;padding:10px;")
         .col-sm-12(style="width:10%;float:left;")
           img.img-circle(src="http://file.tttalk.org/thumbnail/{{user_pic}}" width="50" height="50")
         .col-sm-12(style="width:90%;float:right;")
           span.span-text-large{{fullname}} -
           span.span-text-small{{create_date}}
           br
-          img(src="/images/{{lang}}.png" width="25" height="15")
+          img(src="/images/{{lang}}.png" width="25" height="15" style="margin-left:10px;")
           span.span-text-medium{{content}}
           | {{#each comment_translate_children}}
           br
-          img(src="/images/{{lang}}.png" width="25" height="15")
+          img(src="/images/{{lang}}.png" width="25" height="15" style="margin-left:10px;")
           span.span-text-medium{{content}}
           | {{/each}}
       | {{/each}}
