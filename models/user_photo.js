@@ -38,5 +38,6 @@ var UserPhotoSchema = new mongoose.Schema ({
     fullname : String,
     lang : String,
     content : String
+  }
 });
 module.exports = mongoose.model('UserPhoto', UserPhotoSchema);

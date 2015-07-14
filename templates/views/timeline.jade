@@ -9,12 +9,20 @@ block content
     .item
       a.photo(href="/user_photos/{{_id}}")
         img(src="http://file.tttalk.org/bmiddle/{{pic_url}}" width="240" height="240")
-      a.avatar(href="/users/{{user_id}}")
-        img.img-circle(src="http://file.tttalk.org/thumbnail/{{user_pic}}" width="40" height="40")
-      | {{fullname}}
-      | {{user_id}}
-      p {{content}}
-      p {{to_content}}
+      .col-sm-12(style="margin-top:10px;padding:0px;")
+        .col-sm-12(style="width:20%;float:left;padding:0px;")
+          a.avatar(href="/users/{{user_id}}")
+            img.img-circle(src="http://file.tttalk.org/thumbnail/{{user_pic}}" width="45" height="45")
+        .col-sm-12(style="width:80%;float:right;padding:0px;")
+          span.span-text-large{{fullname}}
+      .col-sm-12(style="margin-top:10px;padding:0px;")
+        img(src="/images/{{lang}}.png" width="25" height="15") 
+        span.span-text-medium(style="display:inline;"){{content}}
+        | {{#each translate_children}}
+        br
+        img(src="/images/{{lang}}.png" width="25" height="15")
+        span.span-text-medium{{content}}
+        | {{/each}}
     | {{/each}}
 
   .row

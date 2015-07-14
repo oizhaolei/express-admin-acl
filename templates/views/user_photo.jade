@@ -7,7 +7,8 @@ block content
         img(style="max-width:100%;padding:10px;" src="//file.tttalk.org/original/{{pic_url}}")
       .col-sm-12.div-round(style="margin-top:10px;padding:10px;")
         .col-sm-12(style="width:10%;float:left;")
-          img.img-circle(src="http://file.tttalk.org/thumbnail/{{user_pic}}" width="60" height="60")
+          a.avatar(href="/users/{{user_id}}")
+            img.img-circle(src="http://file.tttalk.org/thumbnail/{{user_pic}}" width="60" height="60")
         .col-sm-12(style="width:90%;float:right;")
           span.span-text-large{{fullname}} -
           span.span-text-small{{create_date}}
